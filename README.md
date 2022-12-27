@@ -4,7 +4,7 @@
 
 # Build a Blackjack Game
 
-This is a solution to the [Section 4: Build a Blackjack Game](https://scrimba.com/learn/learnjavascript/lets-build-a-blackjack-game-coa954d1fb213d2a9d5a1c8ab). Scrimba challenges help you improve your coding skills by building realistic projects.
+This is a solution to the [Section 4: Build a Blackjack Game](https://scrimba.com/learn/learnjavascript/lets-build-a-blackjack-game-coa954d1fb213d2a9d5a1c8ab). Scrimba projects help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
