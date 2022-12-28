@@ -37,6 +37,17 @@ Users should be able to:
 - CSS custom properties
 - Javascript
 
+### Concepts reinforced (javascript)
+
+- arrays
+- objects
+- booleans
+- if else statements
+- comparison and logical operators
+- for loops
+- math object
+- return statements in functions
+
 ### Continued development
 
 Future Additions / improvements:
