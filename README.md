@@ -13,6 +13,7 @@ This is a solution to the [Section 4: Build a Blackjack Game](https://scrimba.co
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
+  - [Concepts reinforced] (#concepts-reinforced)
   - [Continued development](#continued-development)
 
 ## Overview
@@ -37,7 +38,7 @@ Users should be able to:
 - CSS custom properties
 - Javascript
 
-### Concepts reinforced (javascript)
+### Concepts reinforced
 
 - arrays
 - objects
