@@ -7,6 +7,7 @@ let playerHand = []
 let aceValue
 // *------- Boolean varibales -------*
 let startGameClicked = false
+let hasAce
 let hasBlackjack
 let isAlive
 let countAsEleven
@@ -66,6 +67,7 @@ function startGame() {
     if (startGameClicked === false) {
         sum = 0
         hasBlackjack = false
+        hasAce = false
         isAlive = true
         newCardBtn.classList.remove("hide")
         quitBtn.classList.remove("hide")
@@ -97,6 +99,10 @@ function startGame() {
 function anotherCard() {
     if (startGameClicked && isAlive && hasBlackjack === false) {
         newCard = hitMe()
+
+        if (hasAce === true) {
+            return
+        }
 
         playerHand.push(newCard)
         sum += newCard
@@ -147,6 +153,11 @@ function quit() {
 
     newCardBtn.classList.add("hide")
     newGameBtn.classList.add("hide")
+
+    if(hasAce === true) {
+        aceBtn1.classList.add("hide")
+        aceBtn2.classList.add("hide")
+    }
 
 
     if (hasBlackjack === true) {
@@ -207,32 +218,37 @@ function hitMe() {
     } else if (card > 10 && card < 14) {
         return 10
     } else {
-        // return 11
-        toggleButtons()
+        if (startGameClicked === false) {
+            return 11
+        } else {
+            hasAce = true
 
-        message = "You recieved an ace, count it as 1 or 11❓"
-        messageEl.innerHTML = message
-
-        ace = setTimeout(aceReceived, 10000)
-        console.log("ace: " + ace)
-
-        // document.getElementById("aceBtn1").addEventListener("click", aceReceived)
-        // document.getElementById("aceBtn2").addEventListener("click", aceReceived)
-
-        toggleButtons1()
-        
-        return ace
+            showAceButtons()
+    
+            message = "You recieved an ace, count it as 1 or 11❓"
+            messageEl.innerHTML = message
+    
+            return
+        }
     }
 }
 
-// *-------------- prompts user to establish value of ace --------------*
+// *-------------- appends ace card value to array and updates sum --------------*
 function aceReceived(x) {
-    aceValue = x
-    console.log("aceValue: " + aceValue)
-    return aceValue
+    playerHand.push(x)
+    sum += x
+    renderGame()
+    aceBtn1.classList.add("hide")
+    aceBtn2.classList.add("hide")
+
+    if(isAlive === true) {
+        newCardBtn.classList.remove("hide")
+    } else {
+        newCardBtn.classList.add("hide")
+    }
 }
 
-function toggleButtons() {
+function showAceButtons() {
     aceBtn1.classList.remove("hide")
     aceBtn2.classList.remove("hide")
     // startGameBtn.classList.add("hide")

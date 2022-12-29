@@ -53,9 +53,6 @@ Users should be able to:
 
 Future Additions / improvements:
 
-- If hitMe() return value is 14 (ace), run a function that allows user to choose between valuing it as 11 or  1
-    - program should wait for user to press the corresponding button before it continues to execute code
-
 - Add button that allows user to settle and compare hand to dealers hand
     - this button runs a function that does the following
     - adds random cards to the dealers hand (dealerHand[])

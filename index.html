@@ -53,18 +53,21 @@
             <div class="btn-wrap hide" id="new-game-btn">
                 <button onclick="newGame()" class="button">Another Round</button>
             </div>
-            <div class="btn-wrap hide" id="quit-btn">
-                <button onclick="quit()" class="button">Quit</button>
-            </div>
-        </div>
+
 
         <!-- ------------------ Ace Buttons ------------------ -->
-        <div class="d-flex row">
-            <div id="ace-btn-1-wrap" class="btn-wrap hide">
-                <input onclick="aceReceived('11')" type="button" class="aceBtn" id="aceBtn1" value="11" placeholder="Count as 11">
+            <div class="d-flex row">
+                <div id="ace-btn-1-wrap" class="btn-wrap hide">
+                    <input onclick="aceReceived(11)" type="button" class="aceBtn" id="ace-btn1" value="Count as 11">
+                </div>
+                <div id="ace-btn-2-wrap" class="btn-wrap hide">
+                    <input onclick="aceReceived(1)" type="button" class="aceBtn" id="ace-btn2" value="Count as 1">
+                </div>
             </div>
-            <div id="ace-btn-2-wrap" class="btn-wrap hide">
-                <input onclick="aceReceived('1')" type="button" class="aceBtn" id="aceBtn2" value="1" placeholder="Count as 1">
+
+        <!-- ------------------ Quit Button ------------------ -->
+            <div class="btn-wrap hide" id="quit-btn">
+                <button onclick="quit()" class="button">Quit</button>
             </div>
         </div>
 
