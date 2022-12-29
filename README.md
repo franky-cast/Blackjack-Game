@@ -55,13 +55,6 @@ Future Additions / improvements:
 
 - If hitMe() return value is 14 (ace), run a function that allows user to choose between valuing it as 11 or  1
     - program should wait for user to press the corresponding button before it continues to execute code
-    - decision buttons should call the same function and pass their id (as an arugemnt) to that function, so that the function can access the value :-->              function countAsOne(theIdPassed) {
-                                                aceValue = document.getElementById(theIdPassed).value
-                                                return aceValue
-                                            }
-
-    - Determine which button called the function (get the buttons id first, then access its value)
-    - return value
 
 - Add button that allows user to settle and compare hand to dealers hand
     - this button runs a function that does the following

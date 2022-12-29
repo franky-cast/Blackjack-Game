@@ -133,10 +133,6 @@ function newGame() {
     formEl.classList.add("hide")
 }
 
-// function decision() {
-//     return countAsEleven
-// }
-
 function quit() {
     formEl.classList.remove("hide")
     quitBtn.classList.add("hide")
@@ -214,23 +210,36 @@ function hitMe() {
         if (startGameClicked === false) { // <---- if one of the first two cards is an ace
             return 11
         } else { // <---- if the card is an ace & its not one of the first two
-            // return aceReceived()
-            console.log("decision function should run here")
-            return 11
+            toggleButtons()
+
+            message = "You recieved an ace, count it as 1 or 11❓"
+            messageEl.innerHTML = message
+
+            ace = document.getElementById("aceBtn1").addEventListener("click", aceReceived)
+            ace = document.getElementById("aceBtn2").addEventListener("click", aceReceived)
+            return ace
         }
     }
 }
 
 // *-------------- prompts user to establish value of ace --------------*
-function countAsOne() {
-    aceValue = document.getElementById("aceBtn").value
-    console.log(aceValue)
+function aceReceived(x) {
+    aceValue = x
+    return aceValue
 }
 
 function toggleButtons() {
     aceBtn1.classList.remove("hide")
     aceBtn2.classList.remove("hide")
-    startGameBtn.classList.add("hide")
+    // startGameBtn.classList.add("hide")
     newGameBtn.classList.add("hide")
     newCardBtn.classList.add("hide")
+}
+
+function toggleButtons1() {
+    aceBtn1.classList.add("hide")
+    aceBtn2.classList.add("hide")
+    // startGameBtn.classList.add("hide")
+    newGameBtn.classList.remove("hide")
+    newCardBtn.classList.remove("hide")
 }
