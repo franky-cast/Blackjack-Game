@@ -30,11 +30,11 @@
             <div class="d-flex column">
                 <div class="input-wrap">
                     <label class="label" for="name">Name:</label>
-                    <input class="name-input" type="text" id="name-input" name="name" required>
+                    <input class="name-input" type="text" id="name-input-el" name="name" required>
                 </div>
                 <div class="input-wrap">
                     <label class="label" for="chips">Betting: </label>
-                    <input class="chips-input" type="number" id="chips-input" name="chips" required>
+                    <input class="chips-input" type="number" id="chips-input-el" name="chips" required>
                 </div>
                 <div class="btn-wrap">
                     <button class="submit-button" onclick="returnText()">Submit</button>
@@ -47,20 +47,20 @@
             <div class="btn-wrap hide" id="start-game-btn">
                 <button onclick="startGame()" class="button">Hit Me</button>
             </div>
-            <div class="btn-wrap hide" id="new-card-btn">
+            <div class="btn-wrap hide" id="another-card-btn">
                 <button onclick="anotherCard()" class="button">Hit</button>
             </div>
-            <div class="btn-wrap hide" id="new-game-btn">
+            <div class="btn-wrap hide" id="new-round-btn">
                 <button onclick="newGame()" class="button">Another Round</button>
             </div>
 
 
         <!-- ------------------ Ace Buttons ------------------ -->
             <div class="d-flex row">
-                <div id="ace-btn-1-wrap" class="btn-wrap hide">
+                <div id="ace-btn-11-wrap" class="btn-wrap hide">
                     <input onclick="aceReceived(11)" type="button" class="aceBtn" id="ace-btn1" value="Count as 11">
                 </div>
-                <div id="ace-btn-2-wrap" class="btn-wrap hide">
+                <div id="ace-btn-1-wrap" class="btn-wrap hide">
                     <input onclick="aceReceived(1)" type="button" class="aceBtn" id="ace-btn2" value="Count as 1">
                 </div>
             </div>
