@@ -53,15 +53,6 @@ Users should be able to:
 
 Future Additions / improvements:
 
-- Add dealers hand (dealerHand = [])
-
-- Add button that allows user to settle and compare hand to dealers hand
-    - Compare sum of dealers array to sum of players array
-
-- Add betting component to the game (double down, split, etc)
-    - A button that changes manipulates player.chips and renders it on screen
-    - A cashout button that displays when isAlive is false or hasBlackjack is true
-
 - If hitMe() return value is 14 (ace), run a function that allows user to choose between valuing it as 11 or  1
     - program should wait for user to press the corresponding button before it continues to execute code
     - decision buttons should call the same function and pass a value to that function that specifies (to the program) how said user wants to utilize the ace in his hand
@@ -69,3 +60,13 @@ Future Additions / improvements:
     - Inspect that buttons classes
     - Use if statement —> if “true” in class list countAsEleven = true
     - Return countAsEleven
+
+- Add button that allows user to settle and compare hand to dealers hand
+    - this button runs a function that does the following
+    - adds random cards to the dealers hand (dealerHand[])
+    - Compare sum of dealers array to sum of players array
+    - prompt user depending on their success (win or loss)
+
+- Add betting component to the game (double down, split, etc)
+    - A button that changes manipulates player.chips and renders it on screen
+    - A cashout button that displays when isAlive is false or hasBlackjack is true
