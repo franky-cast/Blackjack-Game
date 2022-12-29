@@ -14,24 +14,50 @@
 
 <body>
     <div id="container" class="container">
-        <h1>🏆 Blackjack 🏆</h1>
-        <p id="message-el">Want to play a round?</p>
-        <p id="current-cards-el"></p>
-        <p id="sum-el"></p>
+        <!-- ------------------ Heads Up Display ------------------ -->
+        <div class="content-display">
+            <h1 class="title">🏆 Blackjack 🏆</h1>
+            <p class="message" id="message-el">Want to play a round?</p>
+            <p class="hand" id="current-cards-el"></p>
+            <p class="count" id="sum-el"></p>
+        </div>
 
-        <div class="d-flex-column">
-            <div class="btn-wrap" id="start-game-btn">
-                <button onclick="startGame()" class="button">Start Game</button>
-            </div>
-            <div class="btn-wrap" id="new-card-btn">
-                <button onclick="anotherCard()" class="button">Another Card</button>
-            </div>
-            <div class="btn-wrap" id="new-game-btn">
-                <button onclick="quit()" class="button">New Game / Quit</button>
+        <!-- ------------------ Play Button ------------------ -->
+        <div  onclick="play()" id="play-btn-wrap" class="btn-wrap play-btn-wrap"><button class="button play-button" id="play-button">Play</button></div>
+
+        <!-- ------------------ INPUT FORM ------------------ -->
+        <div class="form hide" id="form-el">
+            <div class="d-flex column">
+                <div class="input-wrap">
+                    <label class="label" for="name">Name:</label>
+                    <input class="name-input" type="text" id="name-input" name="name">
+                </div>
+                <div class="input-wrap">
+                    <label class="label" for="chips">Betting: </label>
+                    <input class="chips-input" type="number" id="chips-input" name="chips">
+                </div>
+                <button onclick="returnText()">Submit</button>
             </div>
         </div>
 
-        <div class="d-flex-row">
+        <!-- ------------------ More Buttons ------------------ -->
+        <div class="d-flex column">
+            <div class="btn-wrap hide" id="start-game-btn">
+                <button onclick="startGame()" class="button">Hit Me</button>
+            </div>
+            <div class="btn-wrap hide" id="new-card-btn">
+                <button onclick="anotherCard()" class="button">Hit</button>
+            </div>
+            <div class="btn-wrap hide" id="new-game-btn">
+                <button onclick="newGame()" class="button">Another Round</button>
+            </div>
+            <div class="btn-wrap hide" id="quit-btn">
+                <button onclick="quit()" class="button">Quit</button>
+            </div>
+        </div>
+
+        <!-- ------------------ Ace Buttons ------------------ -->
+        <div class="d-flex row">
             <div class="btn-wrap hide" id="aceBtn1">
                 <button onclick="decision()" class="button">Keep Ace</button>
             </div>

@@ -1,5 +1,4 @@
 // * ---------------------------------- VARIABLES ---------------------------------- *
-
 // *------- Local varibales -------*
 let sum
 let card
@@ -11,28 +10,49 @@ let hasBlackjack
 let isAlive
 let countAsEleven
 // *------- DOM varibales -------*
+let formEl = document.getElementById("form-el")
+let nameInput
+let chipsInput
 let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let currentCardsEl = document.getElementById("current-cards-el")
+// *------- Buttons -------*
+let playBtnWrap = document.getElementById("play-btn-wrap")
+let playButton = document.getElementById("play-button")
 let aceBtn1 = document.getElementById("aceBtn1")
 let aceBtn2 = document.getElementById("aceBtn2")
 let startGameBtn = document.getElementById("start-game-btn")
 let newCardBtn = document.getElementById("new-card-btn")
 let newGameBtn = document.getElementById("new-game-btn")
+let quitBtn = document.getElementById("quit-btn")
 
 let playerEl = document.getElementById("player-el")
 // *------- player object -------*
 let player = {
-    "name": "Franky",
-    "chips": "150",
+    "name": null,
+    "chips": null,
 }
-
-
-
 
 // * ---------------------------------- FUNCTIONS ---------------------------------- *
 
 // *-------------- Functions called by buttons --------------*
+
+// *---- Idk how to describe this yet  ----*
+function play() {
+    messageEl.innerHTML = "Feeling lucky?"
+    playBtnWrap.classList.remove("play-btn-wrap")
+    playButton.classList.add("hide")
+    formEl.classList.remove("hide")
+}
+
+// *---- Assigns User Inputs to Player Object Keys ----*
+function returnText () {
+    player.name = document.getElementById("name-input").value
+    player.chips = document.getElementById("chips-input").value
+    formEl.classList.add("hide")
+    startGameBtn.classList.remove("hide")
+    messageEl.innerHTML = "Ready to lose?"
+}
 
 // *---- starts game  ----*
 function startGame() {
@@ -40,6 +60,9 @@ function startGame() {
         sum = 0
         hasBlackjack = false
         isAlive = true
+        newCardBtn.classList.remove("hide")
+        quitBtn.classList.remove("hide")
+
 
         // Player is asked to enter his/her name here and how much they want to bet
         playerEl.innerHTML = player.name + ": $" + player.chips     // <---- we want this information to be inputted by the player
@@ -59,6 +82,8 @@ function startGame() {
     } else {
         console.log("You must end the game first")
     }
+
+    startGameBtn.classList.add("hide")
 }
 
 // *---- appends new card to array ----*
@@ -76,7 +101,39 @@ function anotherCard() {
 }
 
 // *---- resets app, updates DOM & variables ----*
+function newGame() {
+    currentCardsEl.innerHTML = ""
+    sumEl.innerHTML = ""
+    messageEl.innerHTML = "Bet More Money?"
+    sum = 0
+    playerHand = []
+    startGameClicked = false
+    playerEl.innerHTML = ""
+
+    newCardBtn.classList.add("hide")
+    newGameBtn.classList.add("hide")
+
+
+    if (hasBlackjack === true) {
+        document.getElementById("container").classList.remove("blackjack")
+    }
+
+    if (isAlive === false) {
+        document.getElementById("container").classList.remove("out")
+    }
+
+    startGameBtn.classList.remove("hide")
+    formEl.classList.add("hide")
+}
+
+function decision() {
+    return countAsEleven
+}
+
 function quit() {
+    formEl.classList.remove("hide")
+    quitBtn.classList.add("hide")
+
     currentCardsEl.innerHTML = ""
     sumEl.innerHTML = ""
     messageEl.innerHTML = "Want to play a round?"
@@ -85,19 +142,17 @@ function quit() {
     startGameClicked = false
     playerEl.innerHTML = ""
 
+    newCardBtn.classList.add("hide")
+    newGameBtn.classList.add("hide")
+
 
     if (hasBlackjack === true) {
-        document.getElementById("container").classList.toggle("container-bj")
+        document.getElementById("container").classList.remove("blackjack")
     }
 
     if (isAlive === false) {
-        document.getElementById("container").classList.toggle("container-ia")
+        document.getElementById("container").classList.remove("out")
     }
-}
-
-function decision() {
-
-    return countAsEleven
 }
 
 
@@ -117,10 +172,14 @@ function renderGame() {
 
     // *---- checks if user has blackjack / is over 21 (toggling css classes) ----*
     if (hasBlackjack === true) {
-        document.getElementById("container").classList.toggle("container-bj")
+        document.getElementById("container").classList.add("blackjack")
+        newGameBtn.classList.remove("hide")
+        newCardBtn.classList.add("hide")
     }
     if (isAlive === false) {
-        document.getElementById("container").classList.toggle("container-ia")
+        document.getElementById("container").classList.add("out")
+        newGameBtn.classList.remove("hide")
+        newCardBtn.classList.add("hide")
     }
 
     // *---- updates message display on GUI ----*
@@ -181,9 +240,9 @@ function oneOrEleven() {
 }
 
 function toggleButtons() {
-    aceBtn1.classList.toggle("decision-btn-visible")
-    aceBtn2.classList.toggle("decision-btn-visible")
-    startGameBtn.classList.toggle("hide")
-    newGameBtn.classList.toggle("hide")
-    newCardBtn.classList.toggle("hide")
+    aceBtn1.classList.remove("hide")
+    aceBtn2.classList.remove("hide")
+    startGameBtn.classList.add("hide")
+    newGameBtn.classList.add("hide")
+    newCardBtn.classList.add("hide")
 }
