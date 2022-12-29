@@ -20,8 +20,8 @@ let currentCardsEl = document.getElementById("current-cards-el")
 // *------- Buttons -------*
 let playBtnWrap = document.getElementById("play-btn-wrap")
 let playButton = document.getElementById("play-button")
-let aceBtn1 = document.getElementById("aceBtn1")
-let aceBtn2 = document.getElementById("aceBtn2")
+let aceBtn1 = document.getElementById("ace-btn-1-wrap")
+let aceBtn2 = document.getElementById("ace-btn-2-wrap")
 let startGameBtn = document.getElementById("start-game-btn")
 let newCardBtn = document.getElementById("new-card-btn")
 let newGameBtn = document.getElementById("new-game-btn")
@@ -207,24 +207,28 @@ function hitMe() {
     } else if (card > 10 && card < 14) {
         return 10
     } else {
-        if (startGameClicked === false) { // <---- if one of the first two cards is an ace
-            return 11
-        } else { // <---- if the card is an ace & its not one of the first two
-            toggleButtons()
+        // return 11
+        toggleButtons()
 
-            message = "You recieved an ace, count it as 1 or 11❓"
-            messageEl.innerHTML = message
+        message = "You recieved an ace, count it as 1 or 11❓"
+        messageEl.innerHTML = message
 
-            ace = document.getElementById("aceBtn1").addEventListener("click", aceReceived)
-            ace = document.getElementById("aceBtn2").addEventListener("click", aceReceived)
-            return ace
-        }
+        ace = setTimeout(aceReceived, 10000)
+        console.log("ace: " + ace)
+
+        // document.getElementById("aceBtn1").addEventListener("click", aceReceived)
+        // document.getElementById("aceBtn2").addEventListener("click", aceReceived)
+
+        toggleButtons1()
+        
+        return ace
     }
 }
 
 // *-------------- prompts user to establish value of ace --------------*
 function aceReceived(x) {
     aceValue = x
+    console.log("aceValue: " + aceValue)
     return aceValue
 }
 
