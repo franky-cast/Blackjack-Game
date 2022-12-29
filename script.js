@@ -4,6 +4,7 @@ let sum
 let card
 let message = ""
 let playerHand = []
+let aceValue
 // *------- Boolean varibales -------*
 let startGameClicked = false
 let hasBlackjack
@@ -132,9 +133,9 @@ function newGame() {
     formEl.classList.add("hide")
 }
 
-function decision() {
-    return countAsEleven
-}
+// function decision() {
+//     return countAsEleven
+// }
 
 function quit() {
     formEl.classList.remove("hide")
@@ -213,7 +214,7 @@ function hitMe() {
         if (startGameClicked === false) { // <---- if one of the first two cards is an ace
             return 11
         } else { // <---- if the card is an ace & its not one of the first two
-            // return oneOrEleven()
+            // return aceReceived()
             console.log("decision function should run here")
             return 11
         }
@@ -221,28 +222,9 @@ function hitMe() {
 }
 
 // *-------------- prompts user to establish value of ace --------------*
-function oneOrEleven() {
-
-    // *---- displays decision buttons & hides the new game/quit button  ----*
-    toggleButtons()
-
-    message = "You recieved an ace. Count it as a 1 or 11❓"
-    messageEl.innerHTML = message
-
-    // *---- program is paused until one of the decision buttons is clicked  ----*
-    addEventListener("click", function () {
-        if (countAsEleven === true) {
-            return 11
-        } else {
-            return 1
-        }
-    })
-
-    // *---- hides decision buttons & displays new game/quit button  ----*
-    toggleButtons()
-
-    // *---- returns the value of eleven, a variable used to decide how the user wants to count the ace  ----*
-
+function countAsOne() {
+    aceValue = document.getElementById("aceBtn").value
+    console.log(aceValue)
 }
 
 function toggleButtons() {
