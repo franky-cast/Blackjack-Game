@@ -23,20 +23,22 @@
         </div>
 
         <!-- ------------------ Play Button ------------------ -->
-        <div  onclick="play()" id="play-btn-wrap" class="btn-wrap play-btn-wrap"><button class="button play-button" id="play-button">Play</button></div>
+        <div onclick="play()" id="play-btn-wrap" class="btn-wrap play-btn-wrap"><button class="button play-button" id="play-button">Play</button></div>
 
         <!-- ------------------ INPUT FORM ------------------ -->
         <div class="form hide" id="form-el">
             <div class="d-flex column">
                 <div class="input-wrap">
                     <label class="label" for="name">Name:</label>
-                    <input class="name-input" type="text" id="name-input" name="name">
+                    <input class="name-input" type="text" id="name-input" name="name" required>
                 </div>
                 <div class="input-wrap">
                     <label class="label" for="chips">Betting: </label>
-                    <input class="chips-input" type="number" id="chips-input" name="chips">
+                    <input class="chips-input" type="number" id="chips-input" name="chips" required>
                 </div>
-                <button onclick="returnText()">Submit</button>
+                <div class="btn-wrap">
+                    <button class="submit-button" onclick="returnText()">Submit</button>
+                </div>
             </div>
         </div>
 

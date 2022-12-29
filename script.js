@@ -47,11 +47,17 @@ function play() {
 
 // *---- Assigns User Inputs to Player Object Keys ----*
 function returnText () {
-    player.name = document.getElementById("name-input").value
-    player.chips = document.getElementById("chips-input").value
-    formEl.classList.add("hide")
-    startGameBtn.classList.remove("hide")
-    messageEl.innerHTML = "Ready to lose?"
+    if (document.getElementById("name-input").value === "" || document.getElementById("chips-input").value === "" || document.getElementById("name-input").value === " " ||  document.getElementById("chips-input").value < 10) {
+        alert("Please make sure to enter valid name and at least $10")
+    } else {
+        player.name = document.getElementById("name-input").value
+        document.getElementById("name-input").value = ""
+        player.chips = document.getElementById("chips-input").value
+        document.getElementById("chips-input").value = ""
+        formEl.classList.add("hide")
+        startGameBtn.classList.remove("hide")
+        messageEl.innerHTML = "Ready to lose?"
+    }
 }
 
 // *---- starts game  ----*
