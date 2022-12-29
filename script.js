@@ -47,7 +47,7 @@ function play() {
 
 // *---- Assigns User Inputs to Player Object Keys ----*
 function returnText () {
-    if (document.getElementById("name-input").value === "" || document.getElementById("chips-input").value === "" || document.getElementById("name-input").value === " " ||  document.getElementById("chips-input").value < 10) {
+    if (nameInputEl.value === "" || chipsInputEl.value === "" || nameInputEl.value === " " || chipsInputEl.value < 10) {
         alert("Please make sure to enter valid name and at least $10")
     } else {
         player.name = nameInputEl.value
