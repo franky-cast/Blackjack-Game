@@ -52,6 +52,8 @@ Users should be able to:
 ### Continued development
 
 Future Additions / improvements:
+- add media queries
+
 - validate user inputs
 
 - Add dealers hand (dealerHand = [])
