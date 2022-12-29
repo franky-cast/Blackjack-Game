@@ -59,7 +59,7 @@ Future Additions / improvements:
 - Add dealers hand (dealerHand = [])
 
 - Add button that allows user to settle and compare hand to dealers hand
-      - Compare sum of dealers array to sum of players array
+- - Compare sum of dealers array to sum of players array
 
 - Add betting component to the game (double down, split, etc)
       - A button that changes manipulates player.chips and renders it on screen
