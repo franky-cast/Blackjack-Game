@@ -24,13 +24,13 @@
 
         <!-- ------------------ Play Button ------------------ -->
         <div onclick="play()" id="play-btn-wrap" class="btn-wrap play-btn-wrap">
-            <button class="button play-button" id="play-button">Play</button>
+            <button class="button play-button play-btn" id="play-button">Play</button>
         </div>
 
         <!-- ------------------ INPUT FORM ------------------ -->
         <div class="form hide" id="form-el">
             <div class="d-flex column">
-                <div class="input-wrap">
+                <div class="input-wrap" id="name-input-field">
                     <label class="label" for="name">Name:</label>
                     <input class="name-input" type="text" id="name-input-el" name="name" required>
                 </div>
@@ -39,7 +39,7 @@
                     <input class="chips-input" type="number" id="chips-input-el" name="chips" required>
                 </div>
                 <div class="btn-wrap">
-                    <button class="submit-button" onclick="returnText()">Submit</button>
+                    <button class="submit-button button" onclick="returnText()">Submit</button>
                 </div>
             </div>
         </div>
@@ -66,10 +66,10 @@
         <!-- ------------------ Ace Buttons ------------------ -->
             <div class="d-flex row">
                 <div id="ace-btn-11-wrap" class="btn-wrap hide">
-                    <input onclick="aceReceived(11)" type="button" class="aceBtn" id="ace-btn1" value="Count as 11">
+                    <input onclick="aceReceived(11)" type="button" class="aceBtn button" id="ace-btn1" value="Count as 11">
                 </div>
                 <div id="ace-btn-1-wrap" class="btn-wrap hide">
-                    <input onclick="aceReceived(1)" type="button" class="aceBtn" id="ace-btn2" value="Count as 1">
+                    <input onclick="aceReceived(1)" type="button" class="aceBtn button" id="ace-btn2" value="Count as 1">
                 </div>
             </div>
 

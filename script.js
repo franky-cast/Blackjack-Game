@@ -14,6 +14,7 @@ let isAlive
 let formEl = document.getElementById("form-el")
 let nameInputEl = document.getElementById("name-input-el")
 let chipsInputEl = document.getElementById("chips-input-el")
+let nameInputField = document.getElementById("name-input-field")
 let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let currentCardsEl = document.getElementById("current-cards-el")
@@ -54,12 +55,12 @@ function returnText () {
         player.name = nameInputEl.value
         player.chips = chipsInputEl.value
 
-        nameInputEl.value = ""
-        chipsInputEl.value = ""
-
         formEl.classList.add("hide")
         startGameBtn.classList.remove("hide")
+        nameInputField.classList.remove("hide")
         messageEl.innerHTML = "Ready to lose?"
+
+        playerEl.innerHTML = player.name + ": $" + player.chips
     }
 }
 
@@ -73,8 +74,6 @@ function startGame() {
         anotherCardBtn.classList.remove("hide")
         quitBtn.classList.remove("hide")
         stayBtnWrap.classList.remove("hide")
-
-        playerEl.innerHTML = player.name + ": $" + player.chips
 
         for (let i = 0; i < 2; i++) {
             playerHand.push(hitMe())
@@ -134,6 +133,8 @@ function newGame() {
     if (isAlive === false) {
         document.getElementById("container").classList.remove("out")
         messageEl.innerHTML = "You need to place a bet before starting another round"
+        formEl.classList.remove("hide")
+        nameInputField.classList.add("hide")
     } else {
         formEl.classList.add("hide")
         startGameBtn.classList.remove("hide")
@@ -158,11 +159,14 @@ function quit() {
     playerHand = []
     startGameClicked = false
     playerEl.innerHTML = ""
+    nameInputEl.value = ""
+    chipsInputEl.value = ""
 
     anotherCardBtn.classList.add("hide")
     newRoundBtn.classList.add("hide")
     stayBtnWrap.classList.add("hide")
     startGameBtn.classList.add("hide")
+    nameInputField.classList.remove("hide")
 
     if(hasAce === true) {
         aceBtn11Wrap.classList.add("hide")
