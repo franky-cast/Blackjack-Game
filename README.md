@@ -28,7 +28,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: https://melodious-custard-422181.netlify.app
+- Live Site URL: https://blackjack-web-app.netlify.app/
 
 ## My process
 
