@@ -23,7 +23,9 @@
         </div>
 
         <!-- ------------------ Play Button ------------------ -->
-        <div onclick="play()" id="play-btn-wrap" class="btn-wrap play-btn-wrap"><button class="button play-button" id="play-button">Play</button></div>
+        <div onclick="play()" id="play-btn-wrap" class="btn-wrap play-btn-wrap">
+            <button class="button play-button" id="play-button">Play</button>
+        </div>
 
         <!-- ------------------ INPUT FORM ------------------ -->
         <div class="form hide" id="form-el">
@@ -42,16 +44,22 @@
             </div>
         </div>
 
-        <!-- ------------------ More Buttons ------------------ -->
         <div class="d-flex column">
+            <!-- ------------------ Start Button ------------------ -->
             <div class="btn-wrap hide" id="start-game-btn">
                 <button onclick="startGame()" class="button">Hit Me</button>
             </div>
+            <!-- ------------------ Hit Button ------------------ -->
             <div class="btn-wrap hide" id="another-card-btn">
                 <button onclick="anotherCard()" class="button">Hit</button>
             </div>
+            <!-- ------------------ Stay Button ------------------ -->
+            <div class="btn-wrap hide" id="stay-btn-wrap">
+                <button onclick="stay()" class="button">Stay</button>
+            </div>
+            <!-- ------------------ New Round Button ------------------ -->
             <div class="btn-wrap hide" id="new-round-btn">
-                <button onclick="newGame()" class="button">Another Round</button>
+                <button onclick="newGame()" class="button">New Round</button>
             </div>
 
 

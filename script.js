@@ -27,6 +27,7 @@ let startGameBtn = document.getElementById("start-game-btn")
 let anotherCardBtn = document.getElementById("another-card-btn")
 let newRoundBtn = document.getElementById("new-round-btn")
 let quitBtn = document.getElementById("quit-btn")
+let stayBtnWrap = document.getElementById("stay-btn-wrap")
 // *------- player object -------*
 let player = {
     "name": null,
@@ -71,9 +72,8 @@ function startGame() {
         isAlive = true
         anotherCardBtn.classList.remove("hide")
         quitBtn.classList.remove("hide")
+        stayBtnWrap.classList.remove("hide")
 
-
-        // Player is asked to enter his/her name here and how much they want to bet
         playerEl.innerHTML = player.name + ": $" + player.chips
 
         for (let i = 0; i < 2; i++) {
@@ -117,11 +117,11 @@ function anotherCard() {
 function newGame() {
     currentCardsEl.innerHTML = ""
     sumEl.innerHTML = ""
-    messageEl.innerHTML = "Bet More Money?"
+    messageEl.innerHTML = "Ready?"
     sum = 0
     playerHand = []
     startGameClicked = false
-    playerEl.innerHTML = ""
+    playerEl.innerHTML = player.name + ": $" + player.chips
 
     anotherCardBtn.classList.add("hide")
     newRoundBtn.classList.add("hide")
@@ -133,10 +133,18 @@ function newGame() {
 
     if (isAlive === false) {
         document.getElementById("container").classList.remove("out")
+        messageEl.innerHTML = "You need to place a bet before starting another round"
+    } else {
+        formEl.classList.add("hide")
+        startGameBtn.classList.remove("hide")
     }
 
-    startGameBtn.classList.remove("hide")
-    formEl.classList.add("hide")
+    stayBtnWrap.classList.add("hide")
+}
+
+function stay() {
+    anotherCardBtn.classList.add("hide")
+    stayBtnWrap.classList.add("hide")
 }
 
 function quit() {
@@ -153,6 +161,8 @@ function quit() {
 
     anotherCardBtn.classList.add("hide")
     newRoundBtn.classList.add("hide")
+    stayBtnWrap.classList.add("hide")
+    startGameBtn.classList.add("hide")
 
     if(hasAce === true) {
         aceBtn11Wrap.classList.add("hide")
@@ -189,11 +199,17 @@ function renderGame() {
         document.getElementById("container").classList.add("blackjack")
         newRoundBtn.classList.remove("hide")
         anotherCardBtn.classList.add("hide")
+        stayBtnWrap.classList.add("hide")
+        player.chips = player.chips*2
+        playerEl.innerHTML = player.name + ": $" + player.chips
     }
     if (isAlive === false) {
         document.getElementById("container").classList.add("out")
         newRoundBtn.classList.remove("hide")
         anotherCardBtn.classList.add("hide")
+        stayBtnWrap.classList.add("hide")
+        player.chips = 0
+        playerEl.innerHTML = player.name + ": $" + player.chips
     }
 
     // *---- updates message display on GUI ----*
@@ -211,26 +227,32 @@ function renderGame() {
 
 // *-------------- generates new card --------------*
 function hitMe() {
-    card = Math.floor(Math.random() * 13) + 1
 
-    if (card > 1 && card < 11) {
-        return card
-    } else if (card > 10 && card < 14) {
-        return 10
-    } else {
-        if (startGameClicked === false) {
-            return 11
+    if (player.chips > 10) {
+        card = Math.floor(Math.random() * 13) + 1
+
+        if (card > 1 && card < 11) {
+            return card
+        } else if (card > 10 && card < 14) {
+            return 10
         } else {
-            hasAce = true
-
-            showAceButtons()
+            if (startGameClicked === false) {
+                return 11
+            } else {
+                hasAce = true
     
-            message = "You recieved an ace, count it as 1 or 11❓"
-            messageEl.innerHTML = message
-    
-            return
+                showAceButtons()
+        
+                message = "You recieved an ace, count it as 1 or 11❓"
+                messageEl.innerHTML = message
+        
+                return
+            }
         }
+    } else {
+        alert("Place bet first")
     }
+    
 }
 
 // *-------------- appends ace card value to array and updates sum --------------*

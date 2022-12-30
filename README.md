@@ -53,7 +53,7 @@ Users should be able to:
 
 Future Additions / improvements:
 
-- Add button that allows user to settle and compare hand to dealers hand
+- Add button that allows user to stay and compare hand to dealers hand
     - this button runs a function that does the following
     - adds random cards to the dealers hand (dealerHand[])
     - Compare sum of dealers array to sum of players array
