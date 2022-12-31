@@ -11,24 +11,24 @@ let hasAce
 let hasBlackjack
 let isAlive
 // *------- DOM varibales -------*
-let formEl = document.getElementById("form-el")
-let nameInputEl = document.getElementById("name-input-el")
-let chipsInputEl = document.getElementById("chips-input-el")
-let nameInputField = document.getElementById("name-input-field")
-let messageEl = document.getElementById("message-el")
-let sumEl = document.getElementById("sum-el")
-let currentCardsEl = document.getElementById("current-cards-el")
-let playerEl = document.getElementById("player-el")
+const formEl = document.getElementById("form-el")
+const nameInputEl = document.getElementById("name-input-el")
+const chipsInputEl = document.getElementById("chips-input-el")
+const nameInputField = document.getElementById("name-input-field")
+const messageEl = document.getElementById("message-el")
+const sumEl = document.getElementById("sum-el")
+const currentCardsEl = document.getElementById("current-cards-el")
+const playerEl = document.getElementById("player-el")
 // *------- Buttons -------*
-let playBtnWrap = document.getElementById("play-btn-wrap")
-let playButton = document.getElementById("play-button")
-let aceBtn11Wrap = document.getElementById("ace-btn-11-wrap")
-let aceBtn1Wrap = document.getElementById("ace-btn-1-wrap")
-let startGameBtn = document.getElementById("start-game-btn")
-let anotherCardBtn = document.getElementById("another-card-btn")
-let newRoundBtn = document.getElementById("new-round-btn")
-let quitBtn = document.getElementById("quit-btn")
-let stayBtnWrap = document.getElementById("stay-btn-wrap")
+const playBtnWrap = document.getElementById("play-btn-wrap")
+const playButton = document.getElementById("play-button")
+const aceBtn11Wrap = document.getElementById("ace-btn-11-wrap")
+const aceBtn1Wrap = document.getElementById("ace-btn-1-wrap")
+const startGameBtn = document.getElementById("start-game-btn")
+const anotherCardBtn = document.getElementById("another-card-btn")
+const newRoundBtn = document.getElementById("new-round-btn")
+const quitBtn = document.getElementById("quit-btn")
+const stayBtnWrap = document.getElementById("stay-btn-wrap")
 // *------- player object -------*
 let player = {
     "name": null,
@@ -100,6 +100,7 @@ function anotherCard() {
         newCard = hitMe()
 
         if (hasAce === true) {
+            hasAce = false
             return
         }
 
