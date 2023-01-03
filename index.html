@@ -14,7 +14,7 @@
 
 <body>
     <div id="container" class="container">
-        <!-- ------------------ Heads Up Display ------------------ -->
+        <!-- Heads Up Display -->
         <div class="content-display">
             <h1 class="title">🏆 Blackjack 🏆</h1>
             <p class="message" id="message-el">Want to play a round?</p>
@@ -22,12 +22,12 @@
             <p class="count" id="sum-el"></p>
         </div>
 
-        <!-- ------------------ Play Button ------------------ -->
-        <div onclick="play()" id="play-btn-wrap" class="btn-wrap play-btn-wrap">
+        <!-- Play Button -->
+        <div id="play-btn-wrap" class="btn-wrap play-btn-wrap">
             <button class="button play-button play-btn" id="play-button">Play</button>
         </div>
 
-        <!-- ------------------ INPUT FORM ------------------ -->
+        <!-- Input Form -->
         <div class="form hide" id="form-el">
             <div class="d-flex column">
                 <div class="input-wrap" id="name-input-field">
@@ -39,43 +39,43 @@
                     <input class="chips-input" type="number" id="chips-input-el" name="chips" required>
                 </div>
                 <div class="btn-wrap">
-                    <button class="submit-button button" onclick="returnText()">Submit</button>
+                    <button class="submit-button button" id="submit-button">Submit</button>
                 </div>
             </div>
         </div>
 
         <div class="d-flex column">
-            <!-- ------------------ Start Button ------------------ -->
+            <!-- Start button -->
             <div class="btn-wrap hide" id="start-game-btn">
-                <button onclick="startGame()" class="button">Hit Me</button>
+                <button class="button">Hit Me</button>
             </div>
-            <!-- ------------------ Hit Button ------------------ -->
+            <!-- Hit button -->
             <div class="btn-wrap hide" id="another-card-btn">
-                <button onclick="anotherCard()" class="button">Hit</button>
+                <button class="button">Hit</button>
             </div>
-            <!-- ------------------ Stay Button ------------------ -->
+            <!-- Stay button -->
             <div class="btn-wrap hide" id="stay-btn-wrap">
-                <button onclick="stay()" class="button">Stay</button>
+                <button class="button" id="stay-button">Stay</button>
             </div>
-            <!-- ------------------ New Round Button ------------------ -->
+            <!-- New round button -->
             <div class="btn-wrap hide" id="new-round-btn">
-                <button onclick="newGame()" class="button">New Round</button>
+                <button class="button">New Round</button>
             </div>
 
 
-        <!-- ------------------ Ace Buttons ------------------ -->
+        <!-- Ace buttons -->
             <div class="d-flex row">
-                <div id="ace-btn-11-wrap" class="btn-wrap hide">
-                    <input onclick="aceReceived(11)" type="button" class="aceBtn button" id="ace-btn1" value="Count as 11">
-                </div>
                 <div id="ace-btn-1-wrap" class="btn-wrap hide">
-                    <input onclick="aceReceived(1)" type="button" class="aceBtn button" id="ace-btn2" value="Count as 1">
+                    <input type="button" class="aceBtn button" id="ace-btn1" value="Count as 11">
+                </div>
+                <div id="ace-btn-2-wrap" class="btn-wrap hide">
+                    <input type="button" class="aceBtn button" id="ace-btn2" value="Count as 1">
                 </div>
             </div>
 
-        <!-- ------------------ Quit Button ------------------ -->
+        <!-- Quit button -->
             <div class="btn-wrap hide" id="quit-btn">
-                <button onclick="quit()" class="button">Quit</button>
+                <button class="button">Quit</button>
             </div>
         </div>
 

@@ -1,54 +1,69 @@
-// * ---------------------------------- VARIABLES ---------------------------------- *
 // *------- Local varibales -------*
 let sum
 let card
 let message = ""
-let playerHand = []
-let dealerHand = []
+
 // *------- Boolean varibales -------*
 let startGameClicked = false
 let hasAce
 let hasBlackjack
 let isAlive
+
 // *------- DOM varibales -------*
 const formEl = document.getElementById("form-el")
+
+const messageEl = document.getElementById("message-el")
+const currentCardsEl = document.getElementById("current-cards-el")
+const sumEl = document.getElementById("sum-el")
+
+const nameInputField = document.getElementById("name-input-field")
 const nameInputEl = document.getElementById("name-input-el")
 const chipsInputEl = document.getElementById("chips-input-el")
-const nameInputField = document.getElementById("name-input-field")
-const messageEl = document.getElementById("message-el")
-const sumEl = document.getElementById("sum-el")
-const currentCardsEl = document.getElementById("current-cards-el")
+
 const playerEl = document.getElementById("player-el")
+
 // *------- Buttons -------*
 const playBtnWrap = document.getElementById("play-btn-wrap")
 const playButton = document.getElementById("play-button")
-const aceBtn11Wrap = document.getElementById("ace-btn-11-wrap")
-const aceBtn1Wrap = document.getElementById("ace-btn-1-wrap")
+const submitBtn = document.getElementById("submit-button")
 const startGameBtn = document.getElementById("start-game-btn")
-const anotherCardBtn = document.getElementById("another-card-btn")
-const newRoundBtn = document.getElementById("new-round-btn")
-const quitBtn = document.getElementById("quit-btn")
-const stayBtnWrap = document.getElementById("stay-btn-wrap")
-// *------- player object -------*
-let player = {
-    "name": null,
-    "chips": null,
-}
 
-// * ---------------------------------- FUNCTIONS ---------------------------------- *
+const anotherCardBtn = document.getElementById("another-card-btn")
+const stayBtnWrap = document.getElementById("stay-btn-wrap")
+const stayButton = document.getElementById("stay-button")
+const quitBtn = document.getElementById("quit-btn")
+
+const newRoundBtn = document.getElementById("new-round-btn")
+
+const aceBtn11Wrap = document.getElementById("ace-btn-1-wrap")
+const aceButton1 = document.getElementById("ace-btn1")
+const aceBtn1Wrap = document.getElementById("ace-btn-2-wrap")
+const aceButton2 = document.getElementById("ace-btn2")
+
+let player = {
+    name: null,
+    chips: null,
+    hand: []
+}
+let dealer = {
+    hand: []
+}
 
 // *-------------- Functions called by buttons --------------*
 
 // *---- Enables user input fields  ----*
-function play() {
+
+playButton.addEventListener("click", function () {
+
     messageEl.innerHTML = "Feeling lucky?"
     playBtnWrap.classList.remove("play-btn-wrap")
     playButton.classList.add("hide")
     formEl.classList.remove("hide")
-}
+})
 
 // *---- Assigns User Inputs to Player Object Keys ----*
-function returnText () {
+submitBtn.addEventListener("click", function () {
+
     if (nameInputEl.value === "" || chipsInputEl.value === "" || nameInputEl.value === " " || chipsInputEl.value < 10) {
         alert("Please make sure to enter valid name and at least $10")
     } else {
@@ -60,12 +75,13 @@ function returnText () {
         nameInputField.classList.remove("hide")
         messageEl.innerHTML = "Ready to lose?"
 
-        playerEl.innerHTML = player.name + ": $" + player.chips
+        playerEl.innerHTML = `${player.name}: $${player.chips}`
     }
-}
+})
 
-// *---- starts game  ----*
-function startGame() {
+// *---- initializes variables  ----*
+startGameBtn.addEventListener("click", function () {
+
     if (startGameClicked === false) {
         sum = 0
         hasBlackjack = false
@@ -76,12 +92,12 @@ function startGame() {
         stayBtnWrap.classList.remove("hide")
 
         for (let i = 0; i < 2; i++) {
-            playerHand.push(hitMe())
-            sum += playerHand[i]
+            player.hand.push(randomCard())
+            sum += player.hand[i]
         }
 
         if (sum === 22) {
-            playerHand[1] = 1
+            player.hand[1] = 1
             sum = 12
         }
 
@@ -92,36 +108,81 @@ function startGame() {
     }
 
     startGameBtn.classList.add("hide")
-}
+})
 
-// *---- appends new card to array ----*
-function anotherCard() {
+// *---- appends random card to player and dealer arrays ----*
+anotherCardBtn.addEventListener("click", function () {
+
     if (startGameClicked && isAlive && hasBlackjack === false) {
-        newCard = hitMe()
+        newCard = randomCard()
 
         if (hasAce === true) {
             hasAce = false
             return
         }
 
-        playerHand.push(newCard)
+        player.hand.push(newCard)
         sum += newCard
 
         renderGame()
     } else {
         console.log("You must start the game first")
     }
-}
+})
+
+
+stayButton.addEventListener("click", function () {
+
+    anotherCardBtn.classList.add("hide")
+    stayBtnWrap.classList.add("hide")
+})
+
+quitBtn.addEventListener("click", function () {
+
+    formEl.classList.remove("hide")
+    quitBtn.classList.add("hide")
+
+    currentCardsEl.innerHTML = ""
+    sumEl.innerHTML = ""
+    messageEl.innerHTML = "Want to play a round?"
+    sum = 0
+    player.hand = []
+    startGameClicked = false
+    playerEl.innerHTML = ""
+    nameInputEl.value = ""
+    chipsInputEl.value = ""
+
+    anotherCardBtn.classList.add("hide")
+    newRoundBtn.classList.add("hide")
+    stayBtnWrap.classList.add("hide")
+    startGameBtn.classList.add("hide")
+    nameInputField.classList.remove("hide")
+
+    if (hasAce === true) {
+        aceBtn11Wrap.classList.add("hide")
+        aceBtn1Wrap.classList.add("hide")
+    }
+
+
+    if (hasBlackjack === true) {
+        document.getElementById("container").classList.remove("blackjack")
+    }
+
+    if (isAlive === false) {
+        document.getElementById("container").classList.remove("out")
+    }
+})
 
 // *---- resets app, updates DOM & variables ----*
-function newGame() {
+newRoundBtn.addEventListener("click", function () {
+
     currentCardsEl.innerHTML = ""
     sumEl.innerHTML = ""
     messageEl.innerHTML = "Ready?"
     sum = 0
-    playerHand = []
+    player.hand = []
     startGameClicked = false
-    playerEl.innerHTML = player.name + ": $" + player.chips
+    playerEl.innerHTML = `${player.name}: $${player.chips}`
 
     anotherCardBtn.classList.add("hide")
     newRoundBtn.classList.add("hide")
@@ -142,47 +203,17 @@ function newGame() {
     }
 
     stayBtnWrap.classList.add("hide")
-}
-
-function stay() {
-    anotherCardBtn.classList.add("hide")
-    stayBtnWrap.classList.add("hide")
-}
-
-function quit() {
-    formEl.classList.remove("hide")
-    quitBtn.classList.add("hide")
-
-    currentCardsEl.innerHTML = ""
-    sumEl.innerHTML = ""
-    messageEl.innerHTML = "Want to play a round?"
-    sum = 0
-    playerHand = []
-    startGameClicked = false
-    playerEl.innerHTML = ""
-    nameInputEl.value = ""
-    chipsInputEl.value = ""
-
-    anotherCardBtn.classList.add("hide")
-    newRoundBtn.classList.add("hide")
-    stayBtnWrap.classList.add("hide")
-    startGameBtn.classList.add("hide")
-    nameInputField.classList.remove("hide")
-
-    if(hasAce === true) {
-        aceBtn11Wrap.classList.add("hide")
-        aceBtn1Wrap.classList.add("hide")
-    }
+})
 
 
-    if (hasBlackjack === true) {
-        document.getElementById("container").classList.remove("blackjack")
-    }
+// passes ace value to function
+aceButton1.addEventListener("click", function () {
+    aceReceived (11)
+})
 
-    if (isAlive === false) {
-        document.getElementById("container").classList.remove("out")
-    }
-}
+aceButton2.addEventListener("click", function () {
+    aceReceived (1)
+})
 
 
 // *-------------- DOM manipulation --------------*
@@ -205,8 +236,8 @@ function renderGame() {
         newRoundBtn.classList.remove("hide")
         anotherCardBtn.classList.add("hide")
         stayBtnWrap.classList.add("hide")
-        player.chips = player.chips*2
-        playerEl.innerHTML = player.name + ": $" + player.chips
+        player.chips = player.chips * 2
+        playerEl.innerHTML = `${player.name}: $${player.chips}`
     }
     if (isAlive === false) {
         document.getElementById("container").classList.add("out")
@@ -214,7 +245,7 @@ function renderGame() {
         anotherCardBtn.classList.add("hide")
         stayBtnWrap.classList.add("hide")
         player.chips = 0
-        playerEl.innerHTML = player.name + ": $" + player.chips
+        playerEl.innerHTML = `${player.name}: $${player.chips}`
     }
 
     // *---- updates message display on GUI ----*
@@ -222,8 +253,8 @@ function renderGame() {
 
     // *---- updates current cards display on GUI ----*
     currentCardsEl.innerHTML = "Current cards: "
-    for (let i = 0; i < playerHand.length; i++) {
-        currentCardsEl.innerHTML += playerHand[i] + " "
+    for (let i = 0; i < player.hand.length; i++) {
+        currentCardsEl.innerHTML += player.hand[i] + " "
     }
 
     // *---- updates sum display on GUI ----*
@@ -231,7 +262,7 @@ function renderGame() {
 }
 
 // *-------------- generates new card --------------*
-function hitMe() {
+function randomCard() {
 
     if (player.chips > 10) {
         card = Math.floor(Math.random() * 13) + 1
@@ -245,30 +276,30 @@ function hitMe() {
                 return 11
             } else {
                 hasAce = true
-    
+
                 showAceButtons()
-        
+
                 message = "You recieved an ace, count it as 1 or 11❓"
                 messageEl.innerHTML = message
-        
+
                 return
             }
         }
     } else {
         alert("Place bet first")
     }
-    
 }
 
 // *-------------- appends ace card value to array and updates sum --------------*
 function aceReceived(x) {
-    playerHand.push(x)
+
+    player.hand.push(x)
     sum += x
     renderGame()
     aceBtn11Wrap.classList.add("hide")
     aceBtn1Wrap.classList.add("hide")
 
-    if(isAlive === true) {
+    if (isAlive === true) {
         anotherCardBtn.classList.remove("hide")
     } else {
         anotherCardBtn.classList.add("hide")
@@ -276,6 +307,7 @@ function aceReceived(x) {
 }
 
 function showAceButtons() {
+
     aceBtn11Wrap.classList.remove("hide")
     aceBtn1Wrap.classList.remove("hide")
     newRoundBtn.classList.add("hide")
