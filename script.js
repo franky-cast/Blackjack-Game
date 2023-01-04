@@ -2,6 +2,7 @@
 let sum
 let card
 let message = ""
+let winner
 
 // *------- Boolean varibales -------*
 let startGameClicked = false
@@ -15,6 +16,7 @@ const formEl = document.getElementById("form-el")
 const messageEl = document.getElementById("message-el")
 const currentCardsEl = document.getElementById("current-cards-el")
 const sumEl = document.getElementById("sum-el")
+const dealersHandEl = document.getElementById("dealers-hand-el")
 
 const nameInputField = document.getElementById("name-input-field")
 const nameInputEl = document.getElementById("name-input-el")
@@ -29,8 +31,8 @@ const submitBtn = document.getElementById("submit-button")
 const startGameBtn = document.getElementById("start-game-btn")
 
 const anotherCardBtn = document.getElementById("another-card-btn")
-const stayBtnWrap = document.getElementById("stay-btn-wrap")
-const stayButton = document.getElementById("stay-button")
+const standBtnWrap = document.getElementById("stand-btn-wrap")
+const standButton = document.getElementById("stand-button")
 const quitBtn = document.getElementById("quit-btn")
 
 const newRoundBtn = document.getElementById("new-round-btn")
@@ -46,6 +48,7 @@ let player = {
     hand: []
 }
 let dealer = {
+    name: "Dealer",
     hand: []
 }
 
@@ -89,10 +92,11 @@ startGameBtn.addEventListener("click", function () {
         isAlive = true
         anotherCardBtn.classList.remove("hide")
         quitBtn.classList.remove("hide")
-        stayBtnWrap.classList.remove("hide")
+        standBtnWrap.classList.remove("hide")
 
         for (let i = 0; i < 2; i++) {
             player.hand.push(randomCard())
+            dealer.hand.push(randomCard())
             sum += player.hand[i]
         }
 
@@ -122,6 +126,7 @@ anotherCardBtn.addEventListener("click", function () {
         }
 
         player.hand.push(newCard)
+        dealer.hand.push(newCard)
         sum += newCard
 
         renderGame()
@@ -131,10 +136,9 @@ anotherCardBtn.addEventListener("click", function () {
 })
 
 
-stayButton.addEventListener("click", function () {
-
-    anotherCardBtn.classList.add("hide")
-    stayBtnWrap.classList.add("hide")
+standButton.addEventListener("click", function () {
+    winner = establishWinner()
+    // prompt GUI to communicate result
 })
 
 quitBtn.addEventListener("click", function () {
@@ -143,10 +147,12 @@ quitBtn.addEventListener("click", function () {
     quitBtn.classList.add("hide")
 
     currentCardsEl.innerHTML = ""
+    dealersHandEl.innerHTML = ""
     sumEl.innerHTML = ""
     messageEl.innerHTML = "Want to play a round?"
     sum = 0
     player.hand = []
+    dealer.hand = []
     startGameClicked = false
     playerEl.innerHTML = ""
     nameInputEl.value = ""
@@ -154,7 +160,7 @@ quitBtn.addEventListener("click", function () {
 
     anotherCardBtn.classList.add("hide")
     newRoundBtn.classList.add("hide")
-    stayBtnWrap.classList.add("hide")
+    standBtnWrap.classList.add("hide")
     startGameBtn.classList.add("hide")
     nameInputField.classList.remove("hide")
 
@@ -177,10 +183,12 @@ quitBtn.addEventListener("click", function () {
 newRoundBtn.addEventListener("click", function () {
 
     currentCardsEl.innerHTML = ""
+    dealersHandEl.innerHTML = ""
     sumEl.innerHTML = ""
     messageEl.innerHTML = "Ready?"
     sum = 0
     player.hand = []
+    dealer.hand = []
     startGameClicked = false
     playerEl.innerHTML = `${player.name}: $${player.chips}`
 
@@ -202,7 +210,7 @@ newRoundBtn.addEventListener("click", function () {
         startGameBtn.classList.remove("hide")
     }
 
-    stayBtnWrap.classList.add("hide")
+    standBtnWrap.classList.add("hide")
 })
 
 
@@ -230,35 +238,43 @@ function renderGame() {
         isAlive = false
     }
 
+    // *---- updates message display on GUI ----*
+    messageEl.innerHTML = message
+
+    // *---- updates current cards display on GUI ----*
+    currentCardsEl.innerHTML = "Your hand: "
+    for (let i = 0; i < player.hand.length; i++) {
+        currentCardsEl.innerHTML += `${player.hand[i]} `
+    }
+
+    // *---- updates sum display on GUI ----*
+    sumEl.innerHTML = "Sum: " + sum
+
+    dealersHandEl.innerHTML = `Dealer's hand: ${dealer.hand[0]} X ...`
+
     // *---- checks if user has blackjack / is over 21 (toggling css classes) ----*
     if (hasBlackjack === true) {
-        document.getElementById("container").classList.add("blackjack")
         newRoundBtn.classList.remove("hide")
         anotherCardBtn.classList.add("hide")
-        stayBtnWrap.classList.add("hide")
-        player.chips = player.chips * 2
-        playerEl.innerHTML = `${player.name}: $${player.chips}`
+        standBtnWrap.classList.add("hide")
+        winner = establishWinner()
+        if (winner != null) {
+            document.getElementById("container").classList.add("blackjack")
+            player.chips = player.chips * 2
+            playerEl.innerHTML = `${player.name}: $${player.chips}`
+        } else {
+            console.log("You got blackjack, but so did the dealer")
+        }
+        
     }
     if (isAlive === false) {
         document.getElementById("container").classList.add("out")
         newRoundBtn.classList.remove("hide")
         anotherCardBtn.classList.add("hide")
-        stayBtnWrap.classList.add("hide")
+        standBtnWrap.classList.add("hide")
         player.chips = 0
         playerEl.innerHTML = `${player.name}: $${player.chips}`
     }
-
-    // *---- updates message display on GUI ----*
-    messageEl.innerHTML = message
-
-    // *---- updates current cards display on GUI ----*
-    currentCardsEl.innerHTML = "Current cards: "
-    for (let i = 0; i < player.hand.length; i++) {
-        currentCardsEl.innerHTML += player.hand[i] + " "
-    }
-
-    // *---- updates sum display on GUI ----*
-    sumEl.innerHTML = "Sum: " + sum
 }
 
 // *-------------- generates new card --------------*
@@ -312,4 +328,44 @@ function showAceButtons() {
     aceBtn1Wrap.classList.remove("hide")
     newRoundBtn.classList.add("hide")
     anotherCardBtn.classList.add("hide")
+}
+
+
+function establishWinner() {
+    anotherCardBtn.classList.add("hide")
+    standBtnWrap.classList.add("hide")
+
+    displayDealerHand()
+
+    let dealerSum
+    dealerSum = sumOfArray(dealer.hand)
+
+    if (dealerSum > 21 || sum > dealerSum) {
+        console.log("Player wins")
+        return player
+    } else if (sum < dealerSum && dealerSum <= 21) {
+        console.log("Dealer wins")
+        return dealer
+    } else {
+        console.log("Tie")
+        return null
+    }
+}
+
+function sumOfArray(arr) {
+    let count = 0
+    for (let i = 0; i < arr.length; i++) {
+        count += arr[i]
+    }
+
+    return count
+}
+
+function displayDealerHand () {
+    console.log("displayDealerHand()")
+    dealersHandEl.innerHTML = "Dealer's hand: "
+        for (let i = 0; i < dealer.hand.length; i++) {
+            dealersHandEl.innerHTML += `${dealer.hand[i]} `
+        }
+    console.log(`Dealers hand: ${dealer.hand}`)
 }
