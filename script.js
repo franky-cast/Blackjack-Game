@@ -1,5 +1,6 @@
 // *------- Local varibales -------*
 let sum
+let dealerSum
 let card
 let message = ""
 let winner
@@ -17,6 +18,7 @@ const messageEl = document.getElementById("message-el")
 const currentCardsEl = document.getElementById("current-cards-el")
 const sumEl = document.getElementById("sum-el")
 const dealersHandEl = document.getElementById("dealers-hand-el")
+const dealerSumEl = document.getElementById("dealer-sum-el")
 
 const nameInputField = document.getElementById("name-input-field")
 const nameInputEl = document.getElementById("name-input-el")
@@ -108,7 +110,7 @@ startGameBtn.addEventListener("click", function () {
         renderGame()
         startGameClicked = true
     } else {
-        console.log("You must end the game first")
+        console.log("startGameBtn cannot execute because (startGameClicked === true)")
     }
 
     startGameBtn.classList.add("hide")
@@ -131,14 +133,30 @@ anotherCardBtn.addEventListener("click", function () {
 
         renderGame()
     } else {
-        console.log("You must start the game first")
+        console.log("anotherCardBtn cannot execute because if condition not being met")
     }
 })
 
 
 standButton.addEventListener("click", function () {
     winner = establishWinner()
-    // prompt GUI to communicate result
+    if (winner === "player") {
+        console.log("player wins - standButton.addevent...")
+        player.chips = player.chips * 1.5
+        playerEl.innerHTML = `${player.name}: $${player.chips}`
+        // prompt GUI to communicate result
+        document.getElementById("container").classList.add("blackjack")
+    } else if (winner === "dealer") {
+        console.log("dealer wins - standButton.addevent...")
+        player.chips = 0
+        playerEl.innerHTML = `${player.name}: $${player.chips}`
+        // prompt GUI to communicate result
+        document.getElementById("container").classList.add("out")   
+    } else {
+        console.log("tie - standButton.addevent...")
+        playerEl.innerHTML = `${player.name}: $${player.chips}`
+        // prompt GUI to communicate result
+    }
 })
 
 quitBtn.addEventListener("click", function () {
@@ -149,6 +167,7 @@ quitBtn.addEventListener("click", function () {
     currentCardsEl.innerHTML = ""
     dealersHandEl.innerHTML = ""
     sumEl.innerHTML = ""
+    dealerSumEl.innerHTML = ""
     messageEl.innerHTML = "Want to play a round?"
     sum = 0
     player.hand = []
@@ -169,14 +188,8 @@ quitBtn.addEventListener("click", function () {
         aceBtn1Wrap.classList.add("hide")
     }
 
-
-    if (hasBlackjack === true) {
-        document.getElementById("container").classList.remove("blackjack")
-    }
-
-    if (isAlive === false) {
-        document.getElementById("container").classList.remove("out")
-    }
+    document.getElementById("container").classList.remove("blackjack")
+    document.getElementById("container").classList.remove("out")
 })
 
 // *---- resets app, updates DOM & variables ----*
@@ -275,6 +288,7 @@ function renderGame() {
         player.chips = 0
         playerEl.innerHTML = `${player.name}: $${player.chips}`
         displayDealerHand()
+        sumEl.innerHTML = ""
     }
 }
 
@@ -343,17 +357,14 @@ function establishWinner() {
 
     displayDealerHand()
 
-    let dealerSum
     dealerSum = sumOfArray(dealer.hand)
+    dealerSumEl.innerHTML = `Sum: ${dealerSum}`
 
     if (dealerSum > 21 || sum > dealerSum) {
-        console.log("Player wins")
-        return player
+        return "player"
     } else if (sum < dealerSum && dealerSum <= 21) {
-        console.log("Dealer wins")
-        return dealer
+        return "dealer"
     } else {
-        console.log("Tie")
         return null
     }
 }
@@ -368,7 +379,6 @@ function sumOfArray(arr) {
 }
 
 function displayDealerHand () {
-    console.log("displayDealerHand()")
     dealersHandEl.innerHTML = "Dealer's hand: "
         for (let i = 0; i < dealer.hand.length; i++) {
             dealersHandEl.innerHTML += `${dealer.hand[i]} `
