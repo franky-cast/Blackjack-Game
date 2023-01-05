@@ -59,67 +59,71 @@ let dealer = {
 
 const deck = {
     "clubs": { 
-        "2": "./assets/2clubs.png",
-        "3": "",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "",
-        "8": "",
-        "9": "",
-        "10": "",
-        "11": "",
-        "12": "",
-        "13": "",
-        "14": "",
+        "1": "../assets/deck/aceclubs.png",
+        "2": "../assets/deck/2clubs.png",
+        "3": "../assets/deck/3clubs.png",
+        "4": "../assets/deck/4clubs.png",
+        "5": "../assets/deck/5clubs.png",
+        "6": "../assets/deck/6clubs.png",
+        "7": "../assets/deck/7clubs.png",
+        "8": "../assets/deck/8clubs.png",
+        "9": "../assets/deck/9clubs.png",
+        "10": "../assets/deck/10clubs.png",
+        "11": "../assets/deck/jackclubs.png",
+        "12": "../assets/deck/queenclubs.png",
+        "13": "../assets/deck/kingclubs.png",
+        "14": "../assets/deck/aceclubs.png",
     },
 
     "spades": {
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "",
-        "8": "",
-        "9": "",
-        "10": "",
-        "11": "",
-        "12": "",
-        "13": "",
-        "14": "",
+        "1": "../assets/deck/acespades.png",
+        "2": "../assets/deck/2spades.png",
+        "3": "../assets/deck/3spades.png",
+        "4": "../assets/deck/4spades.png",
+        "5": "../assets/deck/5spades.png",
+        "6": "../assets/deck/6spades.png",
+        "7": "../assets/deck/7spades.png",
+        "8": "../assets/deck/8spades.png",
+        "9": "../assets/deck/9spades.png",
+        "10": "../assets/deck/10spades.png",
+        "11": "../assets/deck/jackspades.png",
+        "12": "../assets/deck/queenspades.png",
+        "13": "../assets/deck/kingspades.png",
+        "14": "../assets/deck/acespades.png",
     },
 
     "hearts": {
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "",
-        "8": "",
-        "9": "",
-        "10": "",
-        "11": "",
-        "12": "",
-        "13": "",
-        "14": "",
+        "1": "../assets/deck/acehearts.png",
+        "2": "../assets/deck/2hearts.png",
+        "3": "../assets/deck/3hearts.png",
+        "4": "../assets/deck/4hearts.png",
+        "5": "../assets/deck/5hearts.png",
+        "6": "../assets/deck/6hearts.png",
+        "7": "../assets/deck/7hearts.png",
+        "8": "../assets/deck/8hearts.png",
+        "9": "../assets/deck/9hearts.png",
+        "10": "../assets/deck/10hearts.png",
+        "11": "../assets/deck/jackhearts.png",
+        "12": "../assets/deck/queenhearts.png",
+        "13": "../assets/deck/kinghearts.png",
+        "14": "../assets/deck/acehearts.png",
     },
 
     "diamonds": {
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "",
-        "8": "",
-        "9": "",
-        "10": "",
-        "11": "",
-        "12": "",
-        "13": "",
-        "14": "",
+        "1": "../assets/deck/acediamonds.png",
+        "2": "../assets/deck/2diamonds.png",
+        "3": "../assets/deck/3diamonds.png",
+        "4": "../assets/deck/4diamonds.png",
+        "5": "../assets/deck/5diamonds.png",
+        "6": "../assets/deck/6diamonds.png",
+        "7": "../assets/deck/7diamonds.png",
+        "8": "../assets/deck/8diamonds.png",
+        "9": "../assets/deck/9diamonds.png",
+        "10": "../assets/deck/10diamonds.png",
+        "11": "../assets/deck/jackdiamonds.png",
+        "12": "../assets/deck/queendiamonds.png",
+        "13": "../assets/deck/kingdiamonds.png",
+        "14": "../assets/deck/acediamonds.png",
     }
 }
 
@@ -326,6 +330,16 @@ function renderGame() {
     // *---- updates current cards display on GUI ----*
     currentCardsEl.innerHTML = "Your hand: "
     for (let i = 0; i < player.hand.length; i++) {
+        symbol = Math.floor((Math.random() * 4) + 1)
+        if (symbol === 1) {
+            symbol = "clubs"
+        } else if (symbol === 2) {
+            symbol = "spades"
+        } else if (symbol === 3) {
+            symbol = "hearts"
+        } else {
+            symbol = "diamonds"
+        }
         url = fetchURL(symbol, player.hand[i])
         currentCardsEl.innerHTML += `
             <img src="${url}" alt="playing card icon">
@@ -369,18 +383,6 @@ function renderGame() {
 function randomCard() {
 
     if (player.chips > 10) {
-
-        symbol = Math.floor((Math.random() * 4) + 1)
-        if (symbol === 1) {
-            symbol = "clubs"
-        } else if (symbol === 2) {
-            symbol = "spades"
-        } else if (symbol === 3) {
-            symbol = "hearts"
-        } else {
-            symbol = "diamonds"
-        }
-
         card = Math.floor((Math.random() * 13) + 2)
 
         if (card > 1 && card < 11) {
@@ -400,7 +402,7 @@ function randomCard() {
 
                 return
             }
-        }
+         } 
     } else {
         alert("Place bet first")
     }
