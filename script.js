@@ -117,7 +117,7 @@ startGameBtn.addEventListener("click", function () {
 // *---- appends random card to player and dealer arrays ----*
 anotherCardBtn.addEventListener("click", function () {
 
-    if (startGameClicked && isAlive && hasBlackjack === false) {
+    if (startGameClicked === true && isAlive === true && hasBlackjack === false) {
         newCard = randomCard()
 
         if (hasAce === true) {
@@ -274,6 +274,7 @@ function renderGame() {
         standBtnWrap.classList.add("hide")
         player.chips = 0
         playerEl.innerHTML = `${player.name}: $${player.chips}`
+        displayDealerHand()
     }
 }
 
@@ -310,10 +311,14 @@ function randomCard() {
 function aceReceived(x) {
 
     player.hand.push(x)
+    tarjeta = Math.floor(Math.random() * 10) + 1
+    dealer.hand.push(tarjeta)
+    
     sum += x
     renderGame()
     aceBtn11Wrap.classList.add("hide")
     aceBtn1Wrap.classList.add("hide")
+    standButton.classList.remove("hide")
 
     if (isAlive === true) {
         anotherCardBtn.classList.remove("hide")
@@ -328,6 +333,7 @@ function showAceButtons() {
     aceBtn1Wrap.classList.remove("hide")
     newRoundBtn.classList.add("hide")
     anotherCardBtn.classList.add("hide")
+    standButton.classList.add("hide")
 }
 
 
