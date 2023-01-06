@@ -52,6 +52,14 @@ Users should be able to:
 - DOM manipulation
 - functions
 
+### Features beyond scrimba version
+
+- User inputs (name and $ chips)
+- User chooses what to value their ace as
+- User plays against dealer
+- Card icons
+- Chips are kept track of so long as the user does not quit the game
+
 ### Continued development
 
 Future Additions / improvements:
