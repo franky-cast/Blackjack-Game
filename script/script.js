@@ -68,11 +68,8 @@ const deck = {
         "7": "../assets/deck/7clubs.png",
         "8": "../assets/deck/8clubs.png",
         "9": "../assets/deck/9clubs.png",
-        "10": "../assets/deck/10clubs.png",
-        "11": "../assets/deck/jackclubs.png",
-        "12": "../assets/deck/queenclubs.png",
-        "13": "../assets/deck/kingclubs.png",
-        "14": "../assets/deck/aceclubs.png",
+        "10": ["../assets/deck/10clubs.png", "../assets/deck/jackclubs.png", "../assets/deck/queenclubs.png", "../assets/deck/kingclubs.png"],
+        "11": "../assets/deck/aceclubs.png",
     },
 
     "spades": {
@@ -85,11 +82,8 @@ const deck = {
         "7": "../assets/deck/7spades.png",
         "8": "../assets/deck/8spades.png",
         "9": "../assets/deck/9spades.png",
-        "10": "../assets/deck/10spades.png",
-        "11": "../assets/deck/jackspades.png",
-        "12": "../assets/deck/queenspades.png",
-        "13": "../assets/deck/kingspades.png",
-        "14": "../assets/deck/acespades.png",
+        "10": ["../assets/deck/10spades.png", "../assets/deck/jackspades.png", "../assets/deck/queenspades.png", "../assets/deck/kingspades.png"],
+        "11": "../assets/deck/acespades.png",
     },
 
     "hearts": {
@@ -102,11 +96,8 @@ const deck = {
         "7": "../assets/deck/7hearts.png",
         "8": "../assets/deck/8hearts.png",
         "9": "../assets/deck/9hearts.png",
-        "10": "../assets/deck/10hearts.png",
-        "11": "../assets/deck/jackhearts.png",
-        "12": "../assets/deck/queenhearts.png",
-        "13": "../assets/deck/kinghearts.png",
-        "14": "../assets/deck/acehearts.png",
+        "10": ["../assets/deck/10hearts.png", "../assets/deck/jackhearts.png", "../assets/deck/queenhearts.png", "../assets/deck/kinghearts.png"],
+        "11": "../assets/deck/acehearts.png",
     },
 
     "diamonds": {
@@ -119,11 +110,8 @@ const deck = {
         "7": "../assets/deck/7diamonds.png",
         "8": "../assets/deck/8diamonds.png",
         "9": "../assets/deck/9diamonds.png",
-        "10": "../assets/deck/10diamonds.png",
-        "11": "../assets/deck/jackdiamonds.png",
-        "12": "../assets/deck/queendiamonds.png",
-        "13": "../assets/deck/kingdiamonds.png",
-        "14": "../assets/deck/acediamonds.png",
+        "10": ["../assets/deck/10diamonds.png", "../assets/deck/jackdiamonds.png", "../assets/deck/queendiamonds.png", "../assets/deck/kingdiamonds.png"],
+        "11": "../assets/deck/acediamonds.png",
     }
 }
 
@@ -212,24 +200,29 @@ anotherCardBtn.addEventListener("click", function () {
 
 
 standButton.addEventListener("click", function () {
+    anotherCardBtn.classList.add("hide")
+    standBtnWrap.classList.add("hide")
     winner = establishWinner()
     if (winner === "player") {
-        console.log("player wins - standButton.addevent...")
+        message = "You win! 🥳"
+        messageEl.innerHTML = message
         player.chips = player.chips * 1.5
         playerEl.innerHTML = `${player.name}: $${player.chips}`
-        // prompt GUI to communicate result
         document.getElementById("container").classList.add("blackjack")
+        // newRoundBtn.classList.remove("hide")
     } else if (winner === "dealer") {
-        console.log("dealer wins - standButton.addevent...")
+        message = "You lose... 😔"
+        messageEl.innerHTML = message
         player.chips = 0
         playerEl.innerHTML = `${player.name}: $${player.chips}`
-        // prompt GUI to communicate result
         document.getElementById("container").classList.add("out")   
     } else {
-        console.log("tie - standButton.addevent...")
+        message = "Tie! 🙅‍♂️ You and dealer have the same hand."
+        messageEl.innerHTML = message
         playerEl.innerHTML = `${player.name}: $${player.chips}`
-        // prompt GUI to communicate result
+        // newRoundBtn.classList.remove("hide")
     }
+    newRoundBtn.classList.remove("hide")
 })
 
 quitBtn.addEventListener("click", function () {
@@ -271,6 +264,7 @@ newRoundBtn.addEventListener("click", function () {
     currentCardsEl.innerHTML = ""
     dealersHandEl.innerHTML = ""
     sumEl.innerHTML = ""
+    dealerSumEl.innerHTML = ""
     messageEl.innerHTML = "Ready?"
     sum = 0
     player.hand = []
@@ -282,11 +276,11 @@ newRoundBtn.addEventListener("click", function () {
     newRoundBtn.classList.add("hide")
 
 
-    if (hasBlackjack === true) {
+    if (hasBlackjack === true || winner === "player") {
         document.getElementById("container").classList.remove("blackjack")
     }
 
-    if (isAlive === false) {
+    if (isAlive === false || winner === "dealer") {
         document.getElementById("container").classList.remove("out")
         messageEl.innerHTML = "You need to place a bet before starting another round"
         formEl.classList.remove("hide")
@@ -315,17 +309,14 @@ function renderGame() {
 
     // *---- evaluates sum of cards & updates variables  ----*
     if (sum <= 20) {
-        message = "Would you like another card?"
+        message = "Would you like another card❔"
     } else if (sum === 21) {
-        message = "Hoorah!!! You have BLACKJACK 🏆🫶"
+        message = "BLACKJACK❗️ You have 21 🏆"
         hasBlackjack = true
     } else {
-        message = "You are out of the game! 😢💔"
+        message = "Bust! You are out of the game 😢💔"
         isAlive = false
     }
-
-    // *---- updates message display on GUI ----*
-    messageEl.innerHTML = message
 
     // *---- updates current cards display on GUI ----*
     currentCardsEl.innerHTML = "Your hand: "
@@ -343,12 +334,9 @@ function renderGame() {
         url = fetchURL(symbol, player.hand[i])
         currentCardsEl.innerHTML += `
             <img src="${url}" alt="playing card icon">
+            ${player.hand[i]}
         `
-        // currentCardsEl.innerHTML += `${player.hand[i]} `
     }
-
-    // *---- updates sum display on GUI ----*
-    sumEl.innerHTML = "Sum: " + sum
 
     dealersHandEl.innerHTML = `Dealer's hand: ${dealer.hand[0]} X ...`
 
@@ -358,12 +346,13 @@ function renderGame() {
         anotherCardBtn.classList.add("hide")
         standBtnWrap.classList.add("hide")
         winner = establishWinner()
+
         if (winner != null) {
             document.getElementById("container").classList.add("blackjack")
             player.chips = player.chips * 2
             playerEl.innerHTML = `${player.name}: $${player.chips}`
         } else {
-            console.log("You got blackjack, but so did the dealer")
+            message = "You got blackjack, but so did the dealer"
         }
         
     }
@@ -377,19 +366,23 @@ function renderGame() {
         displayDealerHand()
         sumEl.innerHTML = ""
     }
+
+    // *---- updates message display on GUI ----*
+    messageEl.innerHTML = message
+
+    // *---- updates sum display on GUI ----*
+    sumEl.innerHTML = "Sum: " + sum
 }
 
 // *-------------- generates new card --------------*
 function randomCard() {
-
+    
     if (player.chips > 10) {
         card = Math.floor((Math.random() * 13) + 2)
 
         if (card > 1 && card < 11) {
             return card
-        } else if (card > 10 && card < 14) {
-            return 10
-        } else {
+        } else if (card === 11) {
             if (startGameClicked === false) {
                 return 11
             } else {
@@ -402,7 +395,9 @@ function randomCard() {
 
                 return
             }
-         } 
+         } else {
+            return 10
+         }
     } else {
         alert("Place bet first")
     }
@@ -413,8 +408,19 @@ function fetchURL(symbol, number) {
     console.log(`symbol: ${symbol}`)
     console.log(`number: ${number}`)
 
-    url = deck[symbol][number]
-    return url
+    if (number != 10) {
+        url = deck[symbol][number]
+        return url
+    } else if (number === 10) {
+        index = Math.floor(Math.random() * 4)
+        url = deck[symbol][number][index]
+        return url
+    }
+
+    
+
+
+    
 }
 
 // *-------------- appends ace card value to array and updates sum --------------*
@@ -426,11 +432,12 @@ function aceReceived(x) {
     
     sum += x
     renderGame()
+
     aceBtn11Wrap.classList.add("hide")
     aceBtn1Wrap.classList.add("hide")
     standButton.classList.remove("hide")
 
-    if (isAlive === true) {
+    if (isAlive === true && hasBlackjack === false) {
         anotherCardBtn.classList.remove("hide")
     } else {
         anotherCardBtn.classList.add("hide")
@@ -448,8 +455,6 @@ function showAceButtons() {
 
 
 function establishWinner() {
-    anotherCardBtn.classList.add("hide")
-    standBtnWrap.classList.add("hide")
 
     displayDealerHand()
 
@@ -479,5 +484,4 @@ function displayDealerHand () {
         for (let i = 0; i < dealer.hand.length; i++) {
             dealersHandEl.innerHTML += `${dealer.hand[i]} `
         }
-    console.log(`Dealers hand: ${dealer.hand}`)
 }
