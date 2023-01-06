@@ -14,6 +14,7 @@ What began as a tutorial project from [Section 4: Build a Blackjack Game](https:
 - [My process](#my-process)
   - [Built with](#built-with)
   - [Concepts reinforced](#concepts-reinforced)
+  - [Features](#features-beyond-scrimba-version)
   - [Continued development](#continued-development)
 
 ## Overview
