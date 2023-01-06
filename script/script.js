@@ -416,11 +416,6 @@ function fetchURL(symbol, number) {
         url = deck[symbol][number][index]
         return url
     }
-
-    
-
-
-    
 }
 
 // *-------------- appends ace card value to array and updates sum --------------*

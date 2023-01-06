@@ -4,7 +4,7 @@
 
 # Build a Blackjack Game
 
-This is a tutorial project [Section 4: Build a Blackjack Game](https://scrimba.com/learn/learnjavascript/lets-build-a-blackjack-game-coa954d1fb213d2a9d5a1c8ab). Scrimba classes help you reinforce key/fundamental programming concepts by giving you projects to build and work on continuously.
+What began as a tutorial project from [Section 4: Build a Blackjack Game](https://scrimba.com/learn/learnjavascript/lets-build-a-blackjack-game-coa954d1fb213d2a9d5a1c8ab) has turned into a personal project.
 
 ## Table of contents
 
@@ -47,18 +47,16 @@ Users should be able to:
 - comparison and logical operators
 - for loops
 - math object
-- return statements in functions
+- return statements
+- template literals
+- DOM manipulation
+- functions
 
 ### Continued development
 
 Future Additions / improvements:
 
-- Add button that allows user to stay and compare hand to dealers hand
-    - this button runs a function that does the following
-    - adds random cards to the dealers hand (dealerHand[])
-    - Compare sum of dealers array to sum of players array
-    - prompt user depending on their success (win or loss)
-
-- Add betting component to the game (double down, split, etc)
-    - A button that changes manipulates player.chips and renders it on screen
-    - A cashout button that displays when isAlive is false or hasBlackjack is true
+- Add betting component to the game (double down, split, etc). This could work with a button that changes / manipulates player.chips and renders it on screen in key moments of the game.
+- Using local storage to keep track of player's profit / losses. 
+- Initially, the amount of $chips the player inputs is subtracted from local storage, reslting in a negative quantity.
+- A cashout button that retreives player's current chips and stores them inlocal storage. Subsequently, the chips the player inputs into the game are subtracted from the local storage.
