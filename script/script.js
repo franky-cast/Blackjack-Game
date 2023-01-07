@@ -1,52 +1,21 @@
 // game state variables
-let sum
+// -------------------------
+let playerSum
 let dealerSum
 let message = ""
 let winner
+
 let card
 let symbol
 let url
 
-// game status variables
 let startGameClicked = false
 let hasAce
 let hasBlackjack
 let isAlive
 
-// *------- DOM varibales -------*
-const formEl = document.getElementById("form-el")
-
-const messageEl = document.getElementById("message-el")
-const currentCardsEl = document.getElementById("current-cards-el")
-const sumEl = document.getElementById("sum-el")
-const dealersHandEl = document.getElementById("dealers-hand-el")
-const dealerSumEl = document.getElementById("dealer-sum-el")
-
-const nameInputField = document.getElementById("name-input-field")
-const nameInputEl = document.getElementById("name-input-el")
-const chipsInputEl = document.getElementById("chips-input-el")
-
-const playerEl = document.getElementById("player-el")
-
-// *------- Buttons -------*
-const playBtnWrap = document.getElementById("play-btn-wrap")
-const playButton = document.getElementById("play-button")
-const submitBtn = document.getElementById("submit-button")
-const startGameBtn = document.getElementById("start-game-btn")
-
-const anotherCardBtn = document.getElementById("another-card-btn")
-const standBtnWrap = document.getElementById("stand-btn-wrap")
-const standButton = document.getElementById("stand-button")
-const quitBtn = document.getElementById("quit-btn")
-
-const newRoundBtn = document.getElementById("new-round-btn")
-
-const aceBtn1Wrap = document.getElementById("ace-btn-1-wrap")
-const aceButton1 = document.getElementById("ace-btn1")
-const aceBtn2Wrap = document.getElementById("ace-btn-2-wrap")
-const aceButton2 = document.getElementById("ace-btn2")
-
-// *------- Objects -------*
+// game objects
+// -------------------------
 let player = {
     name: null,
     chips: null,
@@ -56,7 +25,6 @@ let dealer = {
     name: "Dealer",
     hand: []
 }
-
 const deck = {
     "clubs": { 
         "1": "../assets/deck/aceclubs.png",
@@ -115,6 +83,37 @@ const deck = {
     }
 }
 
+// dom variables
+// -------------------------
+const formEl = document.getElementById("form-el")
+const nameInputField = document.getElementById("name-input-field")
+const messageEl = document.getElementById("message-el")
+const currentCardsEl = document.getElementById("current-cards-el")
+const sumEl = document.getElementById("sum-el")
+const dealersHandEl = document.getElementById("dealers-hand-el")
+const dealerSumEl = document.getElementById("dealer-sum-el")
+const nameInputEl = document.getElementById("name-input-el")
+const chipsInputEl = document.getElementById("chips-input-el")
+const playerEl = document.getElementById("player-el")
+
+// game buttons
+// -------------------------
+const playButton = document.getElementById("play-button")
+const submitBtn = document.getElementById("submit-button")
+const startGameBtn = document.getElementById("start-game-btn")
+const anotherCardBtn = document.getElementById("another-card-btn")
+const standButton = document.getElementById("stand-button")
+const quitBtn = document.getElementById("quit-btn")
+const newRoundBtn = document.getElementById("new-round-btn")
+const aceButton1 = document.getElementById("ace-btn1")
+const aceButton2 = document.getElementById("ace-btn2")
+
+const playBtnWrap = document.getElementById("play-btn-wrap")
+const standBtnWrap = document.getElementById("stand-btn-wrap")
+const aceBtn1Wrap = document.getElementById("ace-btn-1-wrap")
+const aceBtn2Wrap = document.getElementById("ace-btn-2-wrap")
+
+
 // *-------------- Functions called by buttons --------------*
 
 // *---- Enables user input fields  ----*
@@ -150,7 +149,7 @@ submitBtn.addEventListener("click", function () {
 startGameBtn.addEventListener("click", function () {
 
     if (startGameClicked === false) {
-        sum = 0
+        playerSum = 0
         hasBlackjack = false
         hasAce = false
         isAlive = true
@@ -162,12 +161,12 @@ startGameBtn.addEventListener("click", function () {
         for (let i = 0; i < 2; i++) {
             player.hand.push(randomCard())
             dealer.hand.push(randomCard())
-            sum += player.hand[i]
+            playerSum += player.hand[i]
         }
 
-        if (sum === 22) {
+        if (playerSum === 22) {
             player.hand[1] = 1
-            sum = 12
+            playerSum = 12
         }
 
         renderGame()
@@ -192,7 +191,7 @@ anotherCardBtn.addEventListener("click", function () {
 
         player.hand.push(newCard)
         dealer.hand.push(newCard)
-        sum += newCard
+        playerSum += newCard
 
         renderGame()
     } else {
@@ -234,7 +233,7 @@ quitBtn.addEventListener("click", function () {
     sumEl.innerHTML = ""
     dealerSumEl.innerHTML = ""
     messageEl.innerHTML = "Want to play a round?"
-    sum = 0
+    playerSum = 0
     player.hand = []
     dealer.hand = []
     startGameClicked = false
@@ -266,7 +265,7 @@ newRoundBtn.addEventListener("click", function () {
     sumEl.innerHTML = ""
     dealerSumEl.innerHTML = ""
     messageEl.innerHTML = "Ready?"
-    sum = 0
+    playerSum = 0
     player.hand = []
     dealer.hand = []
     startGameClicked = false
@@ -306,9 +305,9 @@ aceButton2.addEventListener("click", function () {
 function renderGame() {
 
     // *---- evaluates sum of cards & updates variables  ----*
-    if (sum <= 20) {
+    if (playerSum <= 20) {
         message = "Would you like another card❔"
-    } else if (sum === 21) {
+    } else if (playerSum === 21) {
         message = "BLACKJACK❗️ You have 21 🏆"
         hasBlackjack = true
     } else {
@@ -426,7 +425,7 @@ function aceReceived(x) {
     tarjeta = Math.floor(Math.random() * 10) + 1
     dealer.hand.push(tarjeta)
     
-    sum += x
+    playerSum += x
     renderGame()
 
     hideElement(aceBtn1Wrap)
@@ -455,9 +454,9 @@ function establishWinner() {
     dealerSum = sumOfArray(dealer.hand)
     dealerSumEl.innerHTML = `Sum: ${dealerSum}`
 
-    if (dealerSum > 21 || sum > dealerSum) {
+    if (dealerSum > 21 || playerSum > dealerSum) {
         return "player"
-    } else if (sum < dealerSum && dealerSum <= 21) {
+    } else if (playerSum < dealerSum && dealerSum <= 21) {
         return "dealer"
     } else {
         return null
