@@ -5,16 +5,14 @@ let dealerSum
 let message = ""
 let winner
 
-let card
-let symbol
+let cardValue
+let cardSuit
 let url
 
-let startGameClicked = false
+let gameStarted = false
 let hasAce
 let hasBlackjack
 let isAlive
-
-// let localStorageChips
 
 // game objects
 // -------------------------
@@ -28,60 +26,57 @@ let dealer = {
     hand: []
 }
 const deck = {
-    "clubs": { 
-        "1": "../assets/deck/aceclubs.png",
-        "2": "../assets/deck/2clubs.png",
-        "3": "../assets/deck/3clubs.png",
-        "4": "../assets/deck/4clubs.png",
-        "5": "../assets/deck/5clubs.png",
-        "6": "../assets/deck/6clubs.png",
-        "7": "../assets/deck/7clubs.png",
-        "8": "../assets/deck/8clubs.png",
-        "9": "../assets/deck/9clubs.png",
-        "10": ["../assets/deck/10clubs.png", "../assets/deck/jackclubs.png", "../assets/deck/queenclubs.png", "../assets/deck/kingclubs.png"],
-        "11": "../assets/deck/aceclubs.png",
+    0: { 
+        1: "../assets/deck/aceclubs.png",
+        2: "../assets/deck/2clubs.png",
+        3: "../assets/deck/3clubs.png",
+        4: "../assets/deck/4clubs.png",
+        5: "../assets/deck/5clubs.png",
+        6: "../assets/deck/6clubs.png",
+        7: "../assets/deck/7clubs.png",
+        8: "../assets/deck/8clubs.png",
+        9: "../assets/deck/9clubs.png",
+        10: ["../assets/deck/10clubs.png", "../assets/deck/jackclubs.png", "../assets/deck/queenclubs.png", "../assets/deck/kingclubs.png"],
+        11: "../assets/deck/aceclubs.png",
     },
-
-    "spades": {
-        "1": "../assets/deck/acespades.png",
-        "2": "../assets/deck/2spades.png",
-        "3": "../assets/deck/3spades.png",
-        "4": "../assets/deck/4spades.png",
-        "5": "../assets/deck/5spades.png",
-        "6": "../assets/deck/6spades.png",
-        "7": "../assets/deck/7spades.png",
-        "8": "../assets/deck/8spades.png",
-        "9": "../assets/deck/9spades.png",
-        "10": ["../assets/deck/10spades.png", "../assets/deck/jackspades.png", "../assets/deck/queenspades.png", "../assets/deck/kingspades.png"],
-        "11": "../assets/deck/acespades.png",
+    1: {
+        1: "../assets/deck/acespades.png",
+        2: "../assets/deck/2spades.png",
+        3: "../assets/deck/3spades.png",
+        4: "../assets/deck/4spades.png",
+        5: "../assets/deck/5spades.png",
+        6: "../assets/deck/6spades.png",
+        7: "../assets/deck/7spades.png",
+        8: "../assets/deck/8spades.png",
+        9: "../assets/deck/9spades.png",
+        10: ["../assets/deck/10spades.png", "../assets/deck/jackspades.png", "../assets/deck/queenspades.png", "../assets/deck/kingspades.png"],
+        11: "../assets/deck/acespades.png",
     },
-
-    "hearts": {
-        "1": "../assets/deck/acehearts.png",
-        "2": "../assets/deck/2hearts.png",
-        "3": "../assets/deck/3hearts.png",
-        "4": "../assets/deck/4hearts.png",
-        "5": "../assets/deck/5hearts.png",
-        "6": "../assets/deck/6hearts.png",
-        "7": "../assets/deck/7hearts.png",
-        "8": "../assets/deck/8hearts.png",
-        "9": "../assets/deck/9hearts.png",
-        "10": ["../assets/deck/10hearts.png", "../assets/deck/jackhearts.png", "../assets/deck/queenhearts.png", "../assets/deck/kinghearts.png"],
-        "11": "../assets/deck/acehearts.png",
+    2: {
+        1: "../assets/deck/acehearts.png",
+        2: "../assets/deck/2hearts.png",
+        3: "../assets/deck/3hearts.png",
+        4: "../assets/deck/4hearts.png",
+        5: "../assets/deck/5hearts.png",
+        6: "../assets/deck/6hearts.png",
+        7: "../assets/deck/7hearts.png",
+        8: "../assets/deck/8hearts.png",
+        9: "../assets/deck/9hearts.png",
+        10: ["../assets/deck/10hearts.png", "../assets/deck/jackhearts.png", "../assets/deck/queenhearts.png", "../assets/deck/kinghearts.png"],
+        11: "../assets/deck/acehearts.png",
     },
-
-    "diamonds": {
-        "1": "../assets/deck/acediamonds.png",
-        "2": "../assets/deck/2diamonds.png",
-        "3": "../assets/deck/3diamonds.png",
-        "4": "../assets/deck/4diamonds.png",
-        "5": "../assets/deck/5diamonds.png",
-        "6": "../assets/deck/6diamonds.png",
-        "7": "../assets/deck/7diamonds.png",
-        "8": "../assets/deck/8diamonds.png",
-        "9": "../assets/deck/9diamonds.png",
-        "10": ["../assets/deck/10diamonds.png", "../assets/deck/jackdiamonds.png", "../assets/deck/queendiamonds.png", "../assets/deck/kingdiamonds.png"],
-        "11": "../assets/deck/acediamonds.png",
+    3: {
+        1: "../assets/deck/acediamonds.png",
+        2: "../assets/deck/2diamonds.png",
+        3: "../assets/deck/3diamonds.png",
+        4: "../assets/deck/4diamonds.png",
+        5: "../assets/deck/5diamonds.png",
+        6: "../assets/deck/6diamonds.png",
+        7: "../assets/deck/7diamonds.png",
+        8: "../assets/deck/8diamonds.png",
+        9: "../assets/deck/9diamonds.png",
+        10: ["../assets/deck/10diamonds.png", "../assets/deck/jackdiamonds.png", "../assets/deck/queendiamonds.png", "../assets/deck/kingdiamonds.png"],
+        11: "../assets/deck/acediamonds.png",
     }
 }
 
@@ -149,7 +144,7 @@ submitBtn.addEventListener("click", function () {
 // draws 2 cards each for player & dealer, calls renderGame()
 startGameBtn.addEventListener("click", function () {
     // if game has just started, proceed with function
-    if (startGameClicked === false) {
+    if (gameStarted === false) {
         initilizeGame()
         showElement(anotherCardBtn)
         showElement(standBtnWrap)
@@ -157,20 +152,20 @@ startGameBtn.addEventListener("click", function () {
 
         // Loop twice and push random cards to player's and dealer's hands
         for (let i = 0; i < 2; i++) {
-            player.hand.push(randomCard())
-            dealer.hand.push(randomCard())
+            player.hand.push(getRandomCard())
+            dealer.hand.push(getRandomCard())
             playerSum += player.hand[i]
         }
         // If player receives two aces, draw 1 new card for player's hand and reset playerSum
         if (playerSum === 22) {
-            player.hand[0] = randomCard()
+            player.hand[0] = getRandomCard()
             playerSum = 0
             for (let i = 0; i < 2; i++) {
                 playerSum += player.hand[i]
             }
         }
         renderGame()
-        startGameClicked = true
+        gameStarted = true
     } else {
         console.log("startGameBtn cannot execute because game has already started")
     }
@@ -178,18 +173,18 @@ startGameBtn.addEventListener("click", function () {
 })
 
 // draws 1 card each for player/dealer, calls renderGame()
-anotherCardBtn.addEventListener("click", function () {
+anotherCardBtn.addEventListener("click", function () {  
     // if game is ongoing proceed with function
-    if (startGameClicked && isAlive && hasBlackjack === false) {
+    if (gameStarted && isAlive && hasBlackjack === false) {
         // draw card for player
-        let drawnCard = randomCard()
+        let drawnCard = getRandomCard()
 
-        // if drawnCard is an ace, stop program flow so user can decide to the value of ace. aceReceived(x) takes over
+        // if drawnCard is an ace, stop program flow so user can decide to the value of ace. aceReceived(aceValue) takes over
         if (hasAce === true) {
             hasAce = false
             return
         } else {
-            dealer.hand.push(randomCard())
+            dealer.hand.push(getRandomCard())
             player.hand.push(drawnCard)
             playerSum += drawnCard
             renderGame()
@@ -279,106 +274,52 @@ newRoundBtn.addEventListener("click", function () {
     }
 })
 
-
-// ------------------------------------------------------------------------------------------------------------
 // passes ace value to function
 aceButton1.addEventListener("click", function () {
     aceReceived (11)
 })
-
 aceButton2.addEventListener("click", function () {
     aceReceived (1)
 })
 
-// Updates game state and renders it to user interface
+// Updates game state & renders to user interface
 function renderGame() {
-
-    // *---- evaluates sum of cards & updates variables  ----*
-    if (playerSum <= 20) {
-        message = "Would you like another card❔"
-    } else if (playerSum === 21) {
-        message = "BLACKJACK❗️ You have 21 🏆"
-        hasBlackjack = true
-    } else {
-        message = "Bust! You are out of the game 😢💔"
-        isAlive = false
-    }
-
-    // *---- updates current cards display on GUI ----*
+    // evaluates player hand (sum) & updates message / game variables (message, hasBlackjack, isAlive)
+    updateGameVariables()
+    // fetches & renders card icon from deck object
     currentCardsEl.innerHTML = "Your hand: "
     for (let i = 0; i < player.hand.length; i++) {
-        symbol = Math.floor((Math.random() * 4) + 1)
-        if (symbol === 1) {
-            symbol = "clubs"
-        } else if (symbol === 2) {
-            symbol = "spades"
-        } else if (symbol === 3) {
-            symbol = "hearts"
-        } else {
-            symbol = "diamonds"
-        }
-        url = fetchURL(symbol, player.hand[i])
+        cardSuit = Math.floor((Math.random() * 4))
+        url = fetchURL(cardSuit, player.hand[i])
         currentCardsEl.innerHTML += `
             <img src="${url}" alt="playing card icon">
             ${player.hand[i]}
         `
     }
-
     dealersHandEl.innerHTML = `Dealer's hand: ${dealer.hand[0]} X ...`
+    // checks hasBlackjack and isAlive & renders DOM if game has come to an end
+    checkGameStatus()
 
-    // *---- checks if user has blackjack / is over 21 (toggling css classes) ----*
-    if (hasBlackjack === true) {
-        winner = establishWinner()
-
-        if (winner != null) {
-            gameBoard.classList.add("blackjack")
-            player.chips = player.chips * 2
-            playerEl.innerHTML = `${player.name}: $${player.chips}`
-        } else {
-            message = "You got blackjack, but so did the dealer"
-        }
-        showElement(newRoundBtn)
-        hideElement(anotherCardBtn)
-        hideElement(standBtnWrap)
-    }
-
-    if (isAlive === false) {
-        gameBoard.classList.add("out")
-
-        player.chips = 0
-        playerEl.innerHTML = `${player.name}: $${player.chips}`
-        displayDealerHand()
-        sumEl.innerHTML = ""
-
-        showElement(newRoundBtn)
-        hideElement(anotherCardBtn)
-        hideElement(standBtnWrap)
-    }
-
-    // *---- updates message display on GUI ----*
+    // renders message & sum of players hand
     messageEl.innerHTML = message
-
-    // *---- updates sum display on GUI ----*
     sumEl.innerHTML = "Sum: " + playerSum
 }
 
-// *-------------- generates new card --------------*
-function randomCard() {
-    card = Math.floor((Math.random() * 13) + 2)
+// draws new card
+function getRandomCard() {
+    cardValue = Math.floor((Math.random() * 13) + 2)
 
-    if (card > 1 && card < 11) {
-        return card
-    } else if (card === 11) {
-        if (startGameClicked === false) {
+    if (cardValue > 1 && cardValue < 11) {
+        return cardValue
+    } else if (cardValue === 11) {
+        if (gameStarted === false) {
             return 11
         } else {
             hasAce = true
-
             showAceButtons()
 
             message = "You recieved an ace, count it as 1 or 11❓"
             messageEl.innerHTML = message
-
             return
         }
      } else {
@@ -387,28 +328,27 @@ function randomCard() {
 }
 
 // fetches url from deck object
-function fetchURL(symbol, number) {
-    console.log(`symbol: ${symbol}`)
+function fetchURL(cardSuit, number) {
+    console.log(`symbol: ${cardSuit}`)
     console.log(`number: ${number}`)
 
     if (number != 10) {
-        url = deck[symbol][number]
+        url = deck[cardSuit][number]
         return url
     } else if (number === 10) {
         index = Math.floor(Math.random() * 4)
-        url = deck[symbol][number][index]
+        url = deck[cardSuit][number][index]
         return url
     }
 }
 
-// *-------------- appends ace card value to array and updates sum --------------*
-function aceReceived(x) {
+// appends aceValue to player array and updates sum
+function aceReceived(aceValue) {
 
-    player.hand.push(x)
-    tarjeta = Math.floor(Math.random() * 11) + 1
-    dealer.hand.push(tarjeta)
-    
-    playerSum += x
+    player.hand.push(aceValue)
+    dealer.hand.push(Math.floor(Math.random() * 11) + 1)
+    playerSum += aceValue
+
     renderGame()
 
     hideElement(aceBtn1Wrap)
@@ -430,8 +370,8 @@ function showAceButtons() {
     hideElement(standButton)
 }
 
+// determines result of game after player stands
 function establishWinner() {
-
     displayDealerHand()
 
     dealerSum = sumOfArray(dealer.hand)
@@ -446,15 +386,16 @@ function establishWinner() {
     }
 }
 
+// calculates sum of any given array
 function sumOfArray(arr) {
     let count = 0
     for (let i = 0; i < arr.length; i++) {
         count += arr[i]
     }
-
     return count
 }
 
+// shows dealers full hand on UI
 function displayDealerHand () {
     dealersHandEl.innerHTML = "Dealer's hand: "
         for (let i = 0; i < dealer.hand.length; i++) {
@@ -462,14 +403,17 @@ function displayDealerHand () {
         }
 }
 
+// shows any given element on UI
 function showElement(element) {
     element.classList.remove('hide');
 }
-  
+
+// hides any given element on UI
 function hideElement(element) {
     element.classList.add('hide');
 }
 
+// initializes game state variables
 function initilizeGame() {
     playerSum = 0
     hasBlackjack = false
@@ -477,6 +421,20 @@ function initilizeGame() {
     isAlive = true
 }
 
+// updates game state variables
+function updateGameVariables() {
+    if (playerSum <= 20) {
+        message = "Would you like another card❔"
+    } else if (playerSum === 21) {
+        message = "BLACKJACK❗️ You have 21 🏆"
+        hasBlackjack = true
+    } else {
+        message = "Bust! You are out of the game 😢💔"
+        isAlive = false
+    }
+}
+
+// resets game state variables
 function resetElements() {
     currentCardsEl.innerHTML = ""
     dealersHandEl.innerHTML = ""
@@ -485,45 +443,36 @@ function resetElements() {
     playerSum = 0
     player.hand = []
     dealer.hand = []
-    startGameClicked = false
+    gameStarted = false
 }
 
-function incrementLocalStorage() {
-    localStorageChips = localStorageChips + player.chips
-    // update value in local storage here
+// checks game status
+function checkGameStatus() {
+    if (hasBlackjack === true) {
+        winner = establishWinner()
+
+        if (winner != null) {
+            gameBoard.classList.add("blackjack")
+            player.chips = player.chips * 2
+            playerEl.innerHTML = `${player.name}: $${player.chips}`
+        } else {
+            message = "You got blackjack, but so did the dealer"
+        }
+        displayDealerHand()
+        showElement(newRoundBtn)
+        hideElement(anotherCardBtn)
+        hideElement(standBtnWrap)
+    }
+    if (isAlive === false) {
+        gameBoard.classList.add("out")
+
+        player.chips = 0
+        playerEl.innerHTML = `${player.name}: $${player.chips}`
+        displayDealerHand()
+        sumEl.innerHTML = ""
+
+        showElement(newRoundBtn)
+        hideElement(anotherCardBtn)
+        hideElement(standBtnWrap)
+    }
 }
-
-function decrementLocalStorage() {
-    localStorageChips = localStorageChips + player.chips
-    // update value in local storage here
-}
-
-
-
-
-
-// replacement for newRoundBtn.addEventListener
-// newRoundBtn.addEventListener("click", function () {
-//     resetElements()
-    
-//     hideElement(anotherCardBtn)
-//     hideElement(newRoundBtn)
-//     hideElement(nameInputField)
-//     hideElement(standBtnWrap)
-//     showElement(formEl)
-
-//     if (gameBoard.classList.contains("blackjack")) {
-//         gameBoard.classList.remove("blackjack")
-//         incrementLocalStorage()
-//     }
-
-//     // if player is coming from a loss
-//     if (gameBoard.classList.contains("out")) {
-//         gameBoard.classList.remove("out")
-//     } else {
-//         incrementLocalStorage()
-//     }
-
-//     messageEl.innerHTML = "Place bet before starting another round"
-//     playerEl.innerHTML = `${player.name}: $${player.chips}`  
-// })
