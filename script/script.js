@@ -134,8 +134,6 @@ submitBtn.addEventListener("click", function () {
     } else {
         player.name = nameInputEl.value
         player.chips = chipsInputEl.value
-        nameInputEl.value = ""
-        chipsInputEl.value = ""
 
         hideElement(formEl)
         showElement(startGameBtn)
@@ -229,6 +227,8 @@ quitBtn.addEventListener("click", function () {
 
     playerEl.innerHTML = ""
     messageEl.innerHTML = "Want to play a round?"
+    nameInputEl.value = ""
+    chipsInputEl.value = ""
 
     showElement(formEl)
     showElement(nameInputField)
