@@ -1,4 +1,4 @@
-// *------- Local varibales -------*
+// game state variables
 let sum
 let dealerSum
 let message = ""
@@ -7,7 +7,7 @@ let card
 let symbol
 let url
 
-// *------- Boolean varibales -------*
+// game status variables
 let startGameClicked = false
 let hasAce
 let hasBlackjack
@@ -41,9 +41,9 @@ const quitBtn = document.getElementById("quit-btn")
 
 const newRoundBtn = document.getElementById("new-round-btn")
 
-const aceBtn11Wrap = document.getElementById("ace-btn-1-wrap")
+const aceBtn1Wrap = document.getElementById("ace-btn-1-wrap")
 const aceButton1 = document.getElementById("ace-btn1")
-const aceBtn1Wrap = document.getElementById("ace-btn-2-wrap")
+const aceBtn2Wrap = document.getElementById("ace-btn-2-wrap")
 const aceButton2 = document.getElementById("ace-btn2")
 
 // *------- Objects -------*
@@ -118,13 +118,12 @@ const deck = {
 // *-------------- Functions called by buttons --------------*
 
 // *---- Enables user input fields  ----*
-
 playButton.addEventListener("click", function () {
-
     messageEl.innerHTML = "Feeling lucky?"
+
     playBtnWrap.classList.remove("play-btn-wrap")
-    playButton.classList.add("hide")
-    formEl.classList.remove("hide")
+    hideElement(playButton)
+    showElement(formEl)
 })
 
 // *---- Assigns User Inputs to Player Object Keys ----*
@@ -136,9 +135,11 @@ submitBtn.addEventListener("click", function () {
         player.name = nameInputEl.value
         player.chips = chipsInputEl.value
 
-        formEl.classList.add("hide")
-        startGameBtn.classList.remove("hide")
-        nameInputField.classList.remove("hide")
+        hideElement(formEl)
+        showElement(startGameBtn)
+        showElement(startGameBtn)
+        showElement(nameInputField)
+
         messageEl.innerHTML = "Ready to lose?"
 
         playerEl.innerHTML = `${player.name}: $${player.chips}`
@@ -153,9 +154,10 @@ startGameBtn.addEventListener("click", function () {
         hasBlackjack = false
         hasAce = false
         isAlive = true
-        anotherCardBtn.classList.remove("hide")
-        quitBtn.classList.remove("hide")
-        standBtnWrap.classList.remove("hide")
+
+        showElement(anotherCardBtn)
+        showElement(quitBtn)
+        showElement(standBtnWrap)
 
         for (let i = 0; i < 2; i++) {
             player.hand.push(randomCard())
@@ -174,7 +176,7 @@ startGameBtn.addEventListener("click", function () {
         console.log("startGameBtn cannot execute because (startGameClicked === true)")
     }
 
-    startGameBtn.classList.add("hide")
+    hideElement(startGameBtn)
 })
 
 // *---- appends random card to player and dealer arrays ----*
@@ -198,10 +200,9 @@ anotherCardBtn.addEventListener("click", function () {
     }
 })
 
-
 standButton.addEventListener("click", function () {
-    anotherCardBtn.classList.add("hide")
-    standBtnWrap.classList.add("hide")
+    hideElement(anotherCardBtn)
+    hideElement(standBtnWrap)
     winner = establishWinner()
     if (winner === "player") {
         message = "You win! 🥳"
@@ -209,7 +210,6 @@ standButton.addEventListener("click", function () {
         player.chips = player.chips * 1.5
         playerEl.innerHTML = `${player.name}: $${player.chips}`
         document.getElementById("container").classList.add("blackjack")
-        // newRoundBtn.classList.remove("hide")
     } else if (winner === "dealer") {
         message = "You lose... 😔"
         messageEl.innerHTML = message
@@ -220,15 +220,14 @@ standButton.addEventListener("click", function () {
         message = "Tie! 🙅‍♂️ You and dealer have the same hand."
         messageEl.innerHTML = message
         playerEl.innerHTML = `${player.name}: $${player.chips}`
-        // newRoundBtn.classList.remove("hide")
     }
-    newRoundBtn.classList.remove("hide")
+    showElement(newRoundBtn)
 })
 
 quitBtn.addEventListener("click", function () {
 
-    formEl.classList.remove("hide")
-    quitBtn.classList.add("hide")
+    showElement(formEl)
+    hideElement(quitBtn)
 
     currentCardsEl.innerHTML = ""
     dealersHandEl.innerHTML = ""
@@ -243,15 +242,16 @@ quitBtn.addEventListener("click", function () {
     nameInputEl.value = ""
     chipsInputEl.value = ""
 
-    anotherCardBtn.classList.add("hide")
-    newRoundBtn.classList.add("hide")
-    standBtnWrap.classList.add("hide")
-    startGameBtn.classList.add("hide")
-    nameInputField.classList.remove("hide")
+    hideElement(anotherCardBtn)
+    hideElement(newRoundBtn)
+    hideElement(standBtnWrap)
+    hideElement(startGameBtn)
+
+    showElement(nameInputField)
 
     if (hasAce === true) {
-        aceBtn11Wrap.classList.add("hide")
-        aceBtn1Wrap.classList.add("hide")
+        hideElement(aceBtn1Wrap)
+        hideElement(aceBtn2Wrap)
     }
 
     document.getElementById("container").classList.remove("blackjack")
@@ -272,9 +272,8 @@ newRoundBtn.addEventListener("click", function () {
     startGameClicked = false
     playerEl.innerHTML = `${player.name}: $${player.chips}`
 
-    anotherCardBtn.classList.add("hide")
-    newRoundBtn.classList.add("hide")
-
+    hideElement(anotherCardBtn)
+    hideElement(newRoundBtn)
 
     if (hasBlackjack === true || winner === "player") {
         document.getElementById("container").classList.remove("blackjack")
@@ -283,16 +282,16 @@ newRoundBtn.addEventListener("click", function () {
     if (isAlive === false || winner === "dealer") {
         document.getElementById("container").classList.remove("out")
         messageEl.innerHTML = "You need to place a bet before starting another round"
-        formEl.classList.remove("hide")
-        nameInputField.classList.add("hide")
+
+        showElement(formEl)
+        hideElement(nameInputField)
     } else {
-        formEl.classList.add("hide")
-        startGameBtn.classList.remove("hide")
+        hideElement(formEl)
+        showElement(startGameBtn)
     }
 
-    standBtnWrap.classList.add("hide")
+    hideElement(standBtnWrap)
 })
-
 
 // passes ace value to function
 aceButton1.addEventListener("click", function () {
@@ -303,8 +302,7 @@ aceButton2.addEventListener("click", function () {
     aceReceived (1)
 })
 
-
-// *-------------- DOM manipulation --------------*
+// Updates game state and renders it to user interface
 function renderGame() {
 
     // *---- evaluates sum of cards & updates variables  ----*
@@ -342,9 +340,10 @@ function renderGame() {
 
     // *---- checks if user has blackjack / is over 21 (toggling css classes) ----*
     if (hasBlackjack === true) {
-        newRoundBtn.classList.remove("hide")
-        anotherCardBtn.classList.add("hide")
-        standBtnWrap.classList.add("hide")
+        showElement(newRoundBtn)
+        hideElement(anotherCardBtn)
+        hideElement(standBtnWrap)
+
         winner = establishWinner()
 
         if (winner != null) {
@@ -356,11 +355,13 @@ function renderGame() {
         }
         
     }
+
     if (isAlive === false) {
         document.getElementById("container").classList.add("out")
-        newRoundBtn.classList.remove("hide")
-        anotherCardBtn.classList.add("hide")
-        standBtnWrap.classList.add("hide")
+        showElement(newRoundBtn)
+        hideElement(anotherCardBtn)
+        hideElement(standBtnWrap)
+
         player.chips = 0
         playerEl.innerHTML = `${player.name}: $${player.chips}`
         displayDealerHand()
@@ -428,26 +429,24 @@ function aceReceived(x) {
     sum += x
     renderGame()
 
-    aceBtn11Wrap.classList.add("hide")
-    aceBtn1Wrap.classList.add("hide")
-    standButton.classList.remove("hide")
+    hideElement(aceBtn1Wrap)
+    hideElement(aceBtn2Wrap)
+    showElement(standButton)
 
     if (isAlive === true && hasBlackjack === false) {
-        anotherCardBtn.classList.remove("hide")
+        showElement(anotherCardBtn)
     } else {
-        anotherCardBtn.classList.add("hide")
+        hideElement(anotherCardBtn)
     }
 }
 
 function showAceButtons() {
-
-    aceBtn11Wrap.classList.remove("hide")
-    aceBtn1Wrap.classList.remove("hide")
-    newRoundBtn.classList.add("hide")
-    anotherCardBtn.classList.add("hide")
-    standButton.classList.add("hide")
+    showElement(aceBtn1Wrap)
+    showElement(aceBtn2Wrap)
+    hideElement(newRoundBtn)
+    hideElement(anotherCardBtn)
+    hideElement(standButton)
 }
-
 
 function establishWinner() {
 
@@ -480,3 +479,11 @@ function displayDealerHand () {
             dealersHandEl.innerHTML += `${dealer.hand[i]} `
         }
 }
+
+function showElement(element) {
+    element.classList.remove('hide');
+  }
+  
+  function hideElement(element) {
+    element.classList.add('hide');
+  }
