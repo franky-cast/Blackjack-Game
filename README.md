@@ -70,4 +70,4 @@ Future Additions / improvements:
 - Add a feature that allows the player to choose between different difficulty levels, such as easy, medium, or hard. This could involve adjusting the dealer's strategy or the probability of certain cards being dealt.
 
 - A cashout button that retreives player's current chips and stores them in a variable.
-- Add a feature that allows the player to choose between different difficulty levels, such as easy, medium, or hard. This could involve adjusting the dealer's strategy or the probability of certain cards being dealt.
+- Create a variable that keeps track of how many times the player has beat the dealer consecutively.
