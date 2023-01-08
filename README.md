@@ -65,7 +65,9 @@ Users should be able to:
 
 Future Additions / improvements:
 
-- Add betting component to the game (double down, split, etc). This could work with a button that changes / manipulates player.chips and renders it on screen in key moments of the game.
-- Using local storage to keep track of player's profit / losses. 
-- Initially, the amount of $chips the player inputs is subtracted from local storage, reslting in a negative quantity.
-- A cashout button that retreives player's current chips and stores them inlocal storage. Subsequently, the chips the player inputs into the game are subtracted from the local storage.
+- Implement a leaderboard or achievements system to give the player goals to work towards and add replay value to the game.
+- Add a "double down" option, which allows the player to double their bet in exchange for receiving only one more card.
+- Add a feature that allows the player to choose between different difficulty levels, such as easy, medium, or hard. This could involve adjusting the dealer's strategy or the probability of certain cards being dealt.
+
+- A cashout button that retreives player's current chips and stores them in a variable.
+- Add a feature that allows the player to choose between different difficulty levels, such as easy, medium, or hard. This could involve adjusting the dealer's strategy or the probability of certain cards being dealt.
