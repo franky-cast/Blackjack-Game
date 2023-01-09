@@ -138,9 +138,11 @@ submitBtn.addEventListener("click", function () {
         showElement(nameInputField)
 
         messageEl.innerHTML = "Ready to lose?"
-        playerEl.innerHTML = `${player.name}: $${player.chips}`
-
-        // localStorageChips = localStorageChips - player.chips
+        playerEl.innerHTML = `
+            ${player.name}
+            <br>
+            Chips: $${player.chips}
+        `
     }
 })
 
@@ -264,7 +266,11 @@ newRoundBtn.addEventListener("click", function () {
     } else {
         // no need to prompt user to input chips [for now]
         messageEl.innerHTML = "Ready?"
-        playerEl.innerHTML = `${player.name}: $${player.chips}`
+        playerEl.innerHTML = `
+            ${player.name}
+            <br>
+            Chips: $${player.chips}
+        `
         hideElement(formEl)
         showElement(startGameBtn)
     }
@@ -452,7 +458,11 @@ function checkGameStatus() {
             payout = 2
             gameBoard.classList.add("blackjack")
             player.chips = player.chips * payout
-            playerEl.innerHTML = `${player.name}: $${player.chips}`
+            playerEl.innerHTML = `
+                ${player.name}
+                <br>
+                Chips: $${player.chips}
+            `
         } else {
             message = "You got blackjack, but so did the dealer"
         }
@@ -465,7 +475,11 @@ function checkGameStatus() {
         gameBoard.classList.add("out")
 
         player.chips = 0
-        playerEl.innerHTML = `${player.name}: $${player.chips}`
+        playerEl.innerHTML = `
+            ${player.name}
+            <br>
+            Chips: $${player.chips}
+        `
         displayDealerHand()
         sumEl.innerHTML = ""
 
@@ -479,7 +493,11 @@ function checkGameStatus() {
 doubleDownBtn.addEventListener("click", () => {
     payout = 2
     player.chips = player.chips * 2
-    playerEl.innerHTML = `${player.name}: $${player.chips}`
+    playerEl.innerHTML = `
+        ${player.name}
+        <br>
+        Chips: $${player.chips}
+    `
 
     hideElement(doubleDownBtn)
     hideElement(standBtnWrap)
@@ -504,6 +522,11 @@ function stand () {
         message = "Tie! 🙅‍♂️ You and dealer have the same hand."
     }
     messageEl.innerHTML = message
-    playerEl.innerHTML = `${player.name}: $${player.chips}`
+    // playerEl.innerHTML = `${player.name}: $${player.chips}`
+    playerEl.innerHTML = `
+        ${player.name}
+        <br>
+        Chips: $${player.chips}
+    `
     showElement(newRoundBtn)
 }
