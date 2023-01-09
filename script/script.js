@@ -204,7 +204,6 @@ anotherCardBtn.addEventListener("click", function () {
     }
 })
 
-// stop receving additional cards & compare hand to dealer's
 standButton.addEventListener("click", function () {
     hideElement(doubleDownBtn)
     stand()
@@ -268,8 +267,6 @@ newRoundBtn.addEventListener("click", function () {
         playerEl.innerHTML = `${player.name}: $${player.chips}`
         hideElement(formEl)
         showElement(startGameBtn)
-        // showElement(standButton)
-        // showElement(standBtnWrap)
     }
 })
 
@@ -349,7 +346,6 @@ function aceReceived(aceValue) {
 
     hideElement(aceBtn1Wrap)
     hideElement(aceBtn2Wrap)
-    // showElement(standButton)
     showElement(standBtnWrap)
 
     if (isAlive === true && hasBlackjack === false && doubledDown === false) {
@@ -364,8 +360,6 @@ function showAceButtons() {
     showElement(aceBtn2Wrap)
     hideElement(newRoundBtn)
     hideElement(anotherCardBtn)
-
-    hideElement(standButton)
     hideElement(standBtnWrap)
 }
 
@@ -481,19 +475,18 @@ function checkGameStatus() {
     }
 }
 
-
+// allows player to double bet in exchange for one more card & increased payout
 doubleDownBtn.addEventListener("click", () => {
     payout = 2
     player.chips = player.chips * 2
     playerEl.innerHTML = `${player.name}: $${player.chips}`
 
     hideElement(doubleDownBtn)
-    // hideElement(standButton)
     hideElement(standBtnWrap)
     doubledDown = true
 })
 
-
+// stop receving additional cards & compare hand to dealer's
 function stand () {
     hideElement(anotherCardBtn)
     hideElement(standBtnWrap)
