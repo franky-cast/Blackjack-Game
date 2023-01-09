@@ -55,7 +55,7 @@ Users should be able to:
 
 ### Features beyond scrimba version
 
-- User inputs (name and $ chips)
+- User input (name and $ chips)
 - User chooses what to value their ace as
 - User plays against dealer
 - Card icons

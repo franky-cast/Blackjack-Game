@@ -8,11 +8,13 @@ let winner
 let cardValue
 let cardSuit
 let url
+let payout
 
 let gameStarted = false
 let hasAce
 let hasBlackjack
 let isAlive
+let doubledDown
 
 // game objects
 // -------------------------
@@ -105,6 +107,7 @@ const quitBtn = document.getElementById("quit-btn")
 const newRoundBtn = document.getElementById("new-round-btn")
 const aceButton1 = document.getElementById("ace-btn1")
 const aceButton2 = document.getElementById("ace-btn2")
+const doubleDownBtn = document.getElementById("double-down-btn")
 
 const playBtnWrap = document.getElementById("play-btn-wrap")
 const standBtnWrap = document.getElementById("stand-btn-wrap")
@@ -149,6 +152,7 @@ startGameBtn.addEventListener("click", function () {
         showElement(anotherCardBtn)
         showElement(standBtnWrap)
         showElement(quitBtn)
+        showElement(doubleDownBtn)
 
         // Loop twice and push random cards to player's and dealer's hands
         for (let i = 0; i < 2; i++) {
@@ -192,28 +196,18 @@ anotherCardBtn.addEventListener("click", function () {
     } else {
         console.log("anotherCardBtn cannot execute because game ended already")
     }
+
+    if (doubledDown === true) {
+        stand()
+    } else {
+        hideElement(doubleDownBtn)
+    }
 })
 
 // stop receving additional cards & compare hand to dealer's
 standButton.addEventListener("click", function () {
-    hideElement(anotherCardBtn)
-    hideElement(standBtnWrap)
-
-    winner = establishWinner()
-    if (winner === "player") {
-        message = "You win! 🥳"
-        player.chips = player.chips * 1.5
-        gameBoard.classList.add("blackjack")
-    } else if (winner === "dealer") {
-        message = "You lose... 😔"
-        player.chips = 0
-        gameBoard.classList.add("out")   
-    } else {
-        message = "Tie! 🙅‍♂️ You and dealer have the same hand."
-    }
-    messageEl.innerHTML = message
-    playerEl.innerHTML = `${player.name}: $${player.chips}`
-    showElement(newRoundBtn)
+    hideElement(doubleDownBtn)
+    stand()
 })
 
 // resets game
@@ -232,6 +226,7 @@ quitBtn.addEventListener("click", function () {
     hideElement(newRoundBtn)
     hideElement(standBtnWrap)
     hideElement(startGameBtn)
+    hideElement(doubleDownBtn)
 
     // removes any added classlists to gameboard
     if (gameBoard.classList.contains("blackjack")){
@@ -253,6 +248,8 @@ newRoundBtn.addEventListener("click", function () {
     hideElement(anotherCardBtn)
     hideElement(newRoundBtn)
     hideElement(standBtnWrap)
+    hideElement(doubleDownBtn)
+    hideElement(quitBtn)
 
     if (gameBoard.classList.contains("blackjack")) {
         gameBoard.classList.remove("blackjack")
@@ -271,6 +268,8 @@ newRoundBtn.addEventListener("click", function () {
         playerEl.innerHTML = `${player.name}: $${player.chips}`
         hideElement(formEl)
         showElement(startGameBtn)
+        // showElement(standButton)
+        // showElement(standBtnWrap)
     }
 })
 
@@ -329,9 +328,6 @@ function getRandomCard() {
 
 // fetches url from deck object
 function fetchURL(cardSuit, number) {
-    console.log(`symbol: ${cardSuit}`)
-    console.log(`number: ${number}`)
-
     if (number != 10) {
         url = deck[cardSuit][number]
         return url
@@ -353,9 +349,10 @@ function aceReceived(aceValue) {
 
     hideElement(aceBtn1Wrap)
     hideElement(aceBtn2Wrap)
-    showElement(standButton)
+    // showElement(standButton)
+    showElement(standBtnWrap)
 
-    if (isAlive === true && hasBlackjack === false) {
+    if (isAlive === true && hasBlackjack === false && doubledDown === false) {
         showElement(anotherCardBtn)
     } else {
         hideElement(anotherCardBtn)
@@ -367,7 +364,9 @@ function showAceButtons() {
     showElement(aceBtn2Wrap)
     hideElement(newRoundBtn)
     hideElement(anotherCardBtn)
+
     hideElement(standButton)
+    hideElement(standBtnWrap)
 }
 
 // determines result of game after player stands
@@ -377,11 +376,11 @@ function establishWinner() {
     dealerSum = sumOfArray(dealer.hand)
     dealerSumEl.innerHTML = `Sum: ${dealerSum}`
 
-    if (dealerSum > 21 || playerSum > dealerSum) {
-        return "player"
-    } else if (playerSum < dealerSum && dealerSum <= 21) {
+    if (playerSum > 21 || playerSum < dealerSum && dealerSum <= 21) {
         return "dealer"
-    } else {
+    } else if (dealerSum > 21 || playerSum > dealerSum) {
+        return "player"
+    }else {
         return null
     }
 }
@@ -397,6 +396,7 @@ function sumOfArray(arr) {
 
 // shows dealers full hand on UI
 function displayDealerHand () {
+    console.log(dealer.hand)
     dealersHandEl.innerHTML = "Dealer's hand: "
         for (let i = 0; i < dealer.hand.length; i++) {
             dealersHandEl.innerHTML += `${dealer.hand[i]} `
@@ -419,6 +419,8 @@ function initilizeGame() {
     hasBlackjack = false
     hasAce = false
     isAlive = true
+    doubledDown = false
+    payout = 1.5
 }
 
 // updates game state variables
@@ -449,11 +451,13 @@ function resetElements() {
 // checks game status
 function checkGameStatus() {
     if (hasBlackjack === true) {
+        hideElement (doubleDownBtn)
         winner = establishWinner()
 
         if (winner != null) {
+            payout = 2
             gameBoard.classList.add("blackjack")
-            player.chips = player.chips * 2
+            player.chips = player.chips * payout
             playerEl.innerHTML = `${player.name}: $${player.chips}`
         } else {
             message = "You got blackjack, but so did the dealer"
@@ -475,4 +479,38 @@ function checkGameStatus() {
         hideElement(anotherCardBtn)
         hideElement(standBtnWrap)
     }
+}
+
+
+doubleDownBtn.addEventListener("click", () => {
+    payout = 2
+    player.chips = player.chips * 2
+    playerEl.innerHTML = `${player.name}: $${player.chips}`
+
+    hideElement(doubleDownBtn)
+    // hideElement(standButton)
+    hideElement(standBtnWrap)
+    doubledDown = true
+})
+
+
+function stand () {
+    hideElement(anotherCardBtn)
+    hideElement(standBtnWrap)
+
+    winner = establishWinner()
+    if (winner === "player") {
+        message = "You win! 🥳"
+        player.chips = player.chips * payout
+        gameBoard.classList.add("blackjack")
+    } else if (winner === "dealer") {
+        message = "You lose... 😔"
+        player.chips = 0
+        gameBoard.classList.add("out")   
+    } else {
+        message = "Tie! 🙅‍♂️ You and dealer have the same hand."
+    }
+    messageEl.innerHTML = message
+    playerEl.innerHTML = `${player.name}: $${player.chips}`
+    showElement(newRoundBtn)
 }
