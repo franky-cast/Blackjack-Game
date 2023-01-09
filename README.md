@@ -66,7 +66,6 @@ Users should be able to:
 Future Additions / improvements:
 
 - Implement a leaderboard or achievements system to give the player goals to work towards and add replay value to the game.
-- Add a "double down" option, which allows the player to double their bet in exchange for receiving only one more card.
 - Add a feature that allows the player to choose between different difficulty levels, such as easy, medium, or hard. This could involve adjusting the dealer's strategy or the probability of certain cards being dealt.
 
 - A cashout button that retreives player's current chips and stores them in a variable.
