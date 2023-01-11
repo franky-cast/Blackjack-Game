@@ -289,15 +289,21 @@ function renderGame() {
     // evaluates player hand (sum) & updates message / game variables (message, hasBlackjack, isAlive)
     updateGameVariables()
     // fetches & renders card icon from deck object
-    currentCardsEl.innerHTML = "Your hand: "
-    for (let i = 0; i < player.hand.length; i++) {
+    let currentCards = ""
+    for (let i of player.hand) {
         cardSuit = Math.floor((Math.random() * 4))
-        url = fetchURL(cardSuit, player.hand[i])
-        currentCardsEl.innerHTML += `
+        url = fetchURL(cardSuit, i)
+        currentCards += `
             <img src="${url}" alt="playing card icon">
-            ${player.hand[i]}
+            ${i}
         `
     }
+    currentCardsEl.innerHTML = `Your hand: ${currentCards}`
+    
+
+
+
+
     dealersHandEl.innerHTML = `Dealer's hand: ${dealer.hand[0]} X ...`
     // checks hasBlackjack and isAlive & renders DOM if game has come to an end
     checkGameStatus()
@@ -388,19 +394,19 @@ function establishWinner() {
 // calculates sum of any given array
 function sumOfArray(arr) {
     let count = 0
-    for (let i = 0; i < arr.length; i++) {
-        count += arr[i]
+    for (let i of arr) {
+        count += i
     }
     return count
 }
 
 // shows dealers full hand on UI
 function displayDealerHand () {
-    console.log(dealer.hand)
-    dealersHandEl.innerHTML = "Dealer's hand: "
-        for (let i = 0; i < dealer.hand.length; i++) {
-            dealersHandEl.innerHTML += `${dealer.hand[i]} `
-        }
+    let dealersHand = ""
+    for(let i of dealer.hand) {
+        dealersHand += `${i} `
+    }
+    dealersHandEl.innerHTML = `Dealer's hand: ${dealersHand}`
 }
 
 // shows any given element on UI
