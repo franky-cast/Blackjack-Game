@@ -1,10 +1,5 @@
 # Blackjack-Game
- Web app blackjack game.
-
-
-# Build a Blackjack Game
-
-What began as a tutorial project from [Section 4: Build a Blackjack Game](https://scrimba.com/learn/learnjavascript/lets-build-a-blackjack-game-coa954d1fb213d2a9d5a1c8ab) has turned into a personal project.
+ Web app blackjack game. Began as a project from [Section 4: Build a Blackjack Game](https://scrimba.com/learn/learnjavascript/lets-build-a-blackjack-game-coa954d1fb213d2a9d5a1c8ab) has turned into a personal project.
 
 ## Table of contents
 
@@ -26,6 +21,9 @@ Users should be able to:
 - View the optimal layout for the app depending on their device's screen size
 - See hover states for all interactive elements on the page
 - Play blackjack against the dealer
+
+### Screenshot
+
 
 ### Links
 
