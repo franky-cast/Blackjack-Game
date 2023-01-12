@@ -23,7 +23,7 @@ Users should be able to:
 - Play blackjack against the dealer
 
 ### Screenshot
-
+![](./assets/img/project-sc.png)
 
 ### Links
 
