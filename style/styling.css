@@ -103,6 +103,10 @@ body {
     border-radius: 15px;
 }
 
+.button:hover {
+    opacity: .8;
+}
+
 
 .submit {
     width: 30%;

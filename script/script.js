@@ -229,6 +229,9 @@ quitBtn.addEventListener("click", function () {
     hideElement(startGameBtn)
     hideElement(doubleDownBtn)
 
+    gameBoard.classList.contains("blackjack")? gameBoard.classList.remove("blackjack"): null
+    gameBoard.classList.contains("out")? gameBoard.classList.remove("out"): null
+
     // removes any added classlists to gameboard
     if (gameBoard.classList.contains("blackjack")){
         gameBoard.classList.remove("blackjack")
